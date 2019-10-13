@@ -19,7 +19,9 @@ public class World implements Model {
      * Deze objecten moeten uiteindelijk ook in de lijst passen (overerving). Daarom is dit
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
-    private List<Object3D> worldObjects;
+    private List<Object3D> Robots;
+    private List<Object> WorldTiles;
+
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -32,8 +34,17 @@ public class World implements Model {
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
-        this.worldObjects = new ArrayList<>();
-        this.worldObjects.add(new Robot());
+        this.Robots = new ArrayList<>();
+        this.Robots.add(new Robot());
+
+        this.WorldTiles = new ArrayList<>();
+        for (int x = 0; x < 10; x++){
+            for (int y = 0; y < 10; y++){
+
+            }
+        }
+
+
     }
 
     /*
@@ -47,7 +58,7 @@ public class World implements Model {
      */
     @Override
     public void update() {
-        for (Object3D object : this.worldObjects) {
+        for (Object3D object : this.Robots) {
             if(object instanceof Updatable) {
                 if (((Updatable)object).update()) {
                     pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
@@ -73,7 +84,7 @@ public class World implements Model {
     public List<Object3D> getWorldObjectsAsList() {
         ArrayList<Object3D> returnList = new ArrayList<>();
 
-        for(Object3D object : this.worldObjects) {
+        for(Object3D object : this.Robots) {
             returnList.add(new ProxyObject3D(object));
         }
 
