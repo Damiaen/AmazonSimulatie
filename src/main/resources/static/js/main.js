@@ -8,7 +8,7 @@ function parseCommand(input = "") {
 
 function main() {
 
-    var socket;
+        var socket;
 
         var camera, scene, renderer;
         var cameraControls;
