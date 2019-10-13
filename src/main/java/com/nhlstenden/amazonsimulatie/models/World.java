@@ -19,8 +19,8 @@ public class World implements Model {
      * Deze objecten moeten uiteindelijk ook in de lijst passen (overerving). Daarom is dit
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
-    private List<Object3D> Robots;
-    private List<Object> WorldTiles;
+    private List<Object3D> robots;
+    private List<WorldTile> worldTiles;
 
 
     /*
@@ -34,17 +34,30 @@ public class World implements Model {
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
-        this.Robots = new ArrayList<>();
-        this.Robots.add(new Robot());
+        this.robots = new ArrayList<>();
+        this.robots.add(new Robot());
 
-        this.WorldTiles = new ArrayList<>();
-        for (int x = 0; x < 10; x++){
-            for (int y = 0; y < 10; y++){
+        this.worldTiles = GenerateWorldTiles(10,1,10);
+    }
 
+    private List<WorldTile> GenerateWorldTiles(int worldWidth, int worldHeigth, int worldLength)
+    {
+        List<WorldTile> Tiles = new ArrayList<>();
+        for (int x = 0; x < worldWidth; x++){
+            for (int z = 0; z < worldLength; z++){
+                Tiles.add(new WorldTile(x,0,z,1,1,1));
             }
         }
+        return Tiles;
+    }
+    private List<WorldTile> GenerateNeighbours()
+    {
+        for (WorldTile Tile: worldTiles
+             ) {
 
+        }
 
+        return null;
     }
 
     /*
@@ -58,7 +71,7 @@ public class World implements Model {
      */
     @Override
     public void update() {
-        for (Object3D object : this.Robots) {
+        for (Object3D object : this.robots) {
             if(object instanceof Updatable) {
                 if (((Updatable)object).update()) {
                     pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
@@ -84,7 +97,7 @@ public class World implements Model {
     public List<Object3D> getWorldObjectsAsList() {
         ArrayList<Object3D> returnList = new ArrayList<>();
 
-        for(Object3D object : this.Robots) {
+        for(Object3D object : this.robots) {
             returnList.add(new ProxyObject3D(object));
         }
 

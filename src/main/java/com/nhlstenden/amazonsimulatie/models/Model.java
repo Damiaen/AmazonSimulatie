@@ -15,7 +15,7 @@ public interface Model {
      * Hier is zo'n commando weergegeven als statische waarde, omdat deze gelijk
      * is voor alle models.
      */
-    static final String UPDATE_COMMAND = "object_update";
+    String UPDATE_COMMAND = "object_update";
 
     /*
      * Alle models moeten kunnen updaten en een observer kunnen toevoegen.

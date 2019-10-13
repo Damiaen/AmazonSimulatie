@@ -65,7 +65,7 @@ public abstract class Controller implements Runnable, PropertyChangeListener {
      * Method to start the controller in a new thread.
      */
     public final void start() {
-        new Thread(this).start();;
+        new Thread(this).start();
     }
 
     public abstract void run();
