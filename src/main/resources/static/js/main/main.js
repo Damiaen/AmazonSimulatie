@@ -9,7 +9,7 @@ let _generationService;
 let _socketService;
 
 function init() {
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1500);
     cameraControls = new THREE.OrbitControls(camera);
     camera.position.z = 15;
     camera.position.y = 5;

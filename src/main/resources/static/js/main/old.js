@@ -36,7 +36,7 @@
 
             function init() {
 
-                camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+                camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 2000);
                 cameraControls = new THREE.OrbitControls(camera);
                 camera.position.z = 15;
                 camera.position.y = 5;
@@ -71,12 +71,12 @@
 
                 var skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
                 var skyboxMaterials = [
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_ft.JPG"), side: THREE.DoubleSide}), //RIGHT
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_bk.JPG"), side: THREE.DoubleSide}), //LEFT
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_up.JPG"), side: THREE.DoubleSide}), //TOP
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_dn.JPG"), side: THREE.DoubleSide}), //BOTTOM
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_rt.JPG"), side: THREE.DoubleSide}), //FRONT
-                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_lf.JPG"), side: THREE.DoubleSide}), //BACK
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //RIGHT
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //LEFT
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_up.png"), side: THREE.DoubleSide}), //TOP
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_down.png"), side: THREE.DoubleSide}), //BOTTOM
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //FRONT
+                    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //BACK
                 ];
                 var skyboxMaterial = new THREE.MeshFaceMaterial(skyboxMaterials);
                 var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
@@ -112,23 +112,23 @@
                 plane.position.y = 0.15;
                 scene.add(plane);
 */
-                 importModel("beach",1,15,0.5,15,0);
-                 importModel("ship",10,-6,-0.3,20,0);
-                 importModel("chest",0.5,10,0.5,12,0.5);
-                 importModel("house",0.4,20,0.15,15,0.5);
-                 importModel("house",0.4,10,0.15,12,1.5);
-                 importModel("house",0.4,11,0.15,8,1.25);
-                 importModel("lighthouse",0.4,23,0.15,7,1.5);
-               //importModel("rock",3,15,1,7,1.5);
+                 // importModel("beach",1,15,0.5,15,0);
+                 importModel("floating_island",200,15,40,15,0);
+                 importModel("airship",0.05,-30,30,10,0);
+                 // importModel("chest",0.5,10,0.5,12,0.5);
+                 // importModel("house",0.4,20,0.15,15,0.5);
+                 // importModel("house",0.4,10,0.15,12,1.5);
+                 // importModel("house",0.4,11,0.15,8,1.25);
+                 importModel("lighthouse",0.7,-18,24,25,1.5);
 
-                var geometry = new THREE.PlaneGeometry(5, 10, 5);
-                var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/wood.jpg"), side: THREE.DoubleSide });
-                var plane = new THREE.Mesh(geometry, material);
-                plane.rotation.x = Math.PI / 2.0;
-                plane.position.x = 1.5;
-                plane.position.z = 15;
-                plane.position.y = -0.4;
-                scene.add(plane);
+                // var geometry = new THREE.PlaneGeometry(5, 10, 5);
+                // var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/wood.jpg"), side: THREE.DoubleSide });
+                // var plane = new THREE.Mesh(geometry, material);
+                // plane.rotation.x = Math.PI / 2.0;
+                // plane.position.x = 1.5;
+                // plane.position.z = 15;
+                // plane.position.y = -0.4;
+                // scene.add(plane);
 
             }
 
