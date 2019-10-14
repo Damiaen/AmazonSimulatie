@@ -43,21 +43,47 @@ public class World implements Model {
     private List<WorldTile> GenerateWorldTiles(int worldWidth, int worldHeigth, int worldLength)
     {
         List<WorldTile> Tiles = new ArrayList<>();
-        for (int x = 0; x < worldWidth; x++){
-            for (int z = 0; z < worldLength; z++){
-                Tiles.add(new WorldTile(x,0,z,1,1,1));
+        for (int z = 0; z < worldLength; z++){
+            for (int x = 0; x < worldWidth; x++){
+                Tiles.add(new WorldTile(x,0,z,1,1,1,null));
             }
         }
         return Tiles;
     }
-    private List<WorldTile> GenerateNeighbours()
+    private void FillNeighbours(List<Node> nodes,int worldWidth, int worldLength)
     {
-        for (WorldTile Tile: worldTiles
-             ) {
+        /*
+            0 --> world width
+            |
+            |
+            \/
+            world length
+         */
 
+        for (int i = 0; i < worldLength; i++)
+        {
+            for (int j = 0; j < worldWidth; j++) {
+                List<Node> t = new ArrayList<>();
+
+                // up
+                if (i > 0 ) {
+                    t.add(nodes.get(j + (i * 10)));
+                }
+                // right
+                if (j == worldWidth - 1) {
+                    t.add(nodes.get(j + (i * 10) + 1));
+                }
+                // down
+                if (i < worldLength -1) {
+                    t.add(nodes.get(j + (i * 10)));
+                }
+                // left
+                if (j - 1 >= 0) {
+                    t.add(nodes.get(j + (i * 10) - 1));
+                }
+                nodes.get(j + (i * 10)).SetNeighbours(t);
+            }
         }
-
-        return null;
     }
 
     /*
