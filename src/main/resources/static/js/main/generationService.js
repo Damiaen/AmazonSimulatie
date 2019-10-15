@@ -9,18 +9,22 @@ class generationService {
         this.worldObjects = {};
     }
 
-    initWorld() {
+    async initWorld() {
         // Setup van alle dingen required voor de wereld zelf
         this.setupWorld();
 
         // Import alle models die nodig zijn
-        this.importModel("floating_island",200,15,40,15,0);
-        this.importModel("CUPIC_AIRSHIP",0.05,-30,30,10,0);
-        // importModel("chest",0.5,10,0.5,12,0.5);
-        // importModel("house",0.4,20,0.15,15,0.5);
-        // importModel("house",0.4,10,0.15,12,1.5);
-        // importModel("house",0.4,11,0.15,8,1.25);
-        this.importModel("lighthouse",0.7,-18,24,25,1.5);
+        await this.importModel("floating_island",400,15,40,15,0);
+        await this.importModel("SM_HUT",2,10,6,40,0);
+        await this.importModel("SM_HUT",2,20,6,-4,1);
+        await this.importModel("PUSHILIN_windmill",10,85,20,-30,0.5);
+        await this.importModel("lighthouse",2,-35,10,70,1.5);
+
+        // Tijdelijke models voor de crates, omdat de backend nog niet af is
+        await this.importModel("CUPIC_AIRSHIP",0.20,-75,30,10,0);
+        await this.importModel("crate",10,10,30,12,0.5);
+        await this.importModel("SM_HUT_2",2,-30,6,40,0);
+
     }
 
     setupWorld() {
@@ -39,7 +43,7 @@ class generationService {
         this.scene.add(skybox);
 
         const color = 0xFFFFFF;
-        const intensity = 1;
+        const intensity = 0.8;
         const light = new THREE.AmbientLight(color, intensity);
         this.scene.add(light);
 
@@ -47,14 +51,14 @@ class generationService {
         directionalLight.castShadow = true;
         this.scene.add(directionalLight);
 
-        var geometry = new THREE.PlaneGeometry(1000, 1000, 1000);
-        var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/water.jpg"), side: THREE.DoubleSide });
-        var plane = new THREE.Mesh(geometry, material);
-        plane.rotation.x = Math.PI / 2.0;
-        plane.position.x = 15;
-        plane.position.z = 15;
-        plane.position.y = -3;
-        this.scene.add(plane);
+        // var geometry = new THREE.PlaneGeometry(1000, 1000, 1000);
+        // var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/water.jpg"), side: THREE.DoubleSide });
+        // var plane = new THREE.Mesh(geometry, material);
+        // plane.rotation.x = Math.PI / 2.0;
+        // plane.position.x = 15;
+        // plane.position.z = 15;
+        // plane.position.y = -300;
+        // this.scene.add(plane);
     }
 
     setupAudio() {
@@ -75,7 +79,7 @@ class generationService {
         // });
     }
 
-    importModel(name, size = 1, xpos = 0, ypos = 0, zpos = 0, rotation = 0) {
+    async importModel(name, size, xpos, ypos, zpos, rotation) {
         const objLoader = new OBJLoader2();
         const mtlLoader = new MTLLoader();
         mtlLoader.load('../../assets/models/' + name + '.mtl', (mtlParseResult) => {
