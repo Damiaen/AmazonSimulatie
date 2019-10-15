@@ -10,24 +10,18 @@ class generationService {
     }
 
     async initWorld() {
-        // Setup van alle dingen required voor de wereld zelf
-        this.setupWorld();
-
-        // Import alle models die nodig zijn
-        await this.importModel("floating_island",400,15,40,15,0);
-        await this.importModel("SM_HUT",2,10,6,40,0);
-        await this.importModel("SM_HUT",2,20,6,-4,1);
-        await this.importModel("PUSHILIN_windmill",10,85,20,-30,0.5);
-        await this.importModel("lighthouse",2,-35,10,70,1.5);
-
-        // Tijdelijke models voor de crates, omdat de backend nog niet af is
-        await this.importModel("CUPIC_AIRSHIP",0.20,-75,30,10,0);
-        await this.importModel("crate",10,10,30,12,0.5);
-        await this.importModel("SM_HUT_2",2,-30,6,40,0);
-
+        return new Promise((resolve, reject) => {
+            let generatingCompleted;
+            this.setupWorld().then(response => { generatingCompleted = response });
+            if(generatingCompleted) {
+                resolve(true);
+            } else {
+                reject(false);
+            }
+        });
     }
 
-    setupWorld() {
+    async setupWorld() {
         var skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
         var skyboxMaterials = [
             new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //RIGHT
@@ -50,6 +44,24 @@ class generationService {
         var directionalLight = new THREE.DirectionalLight(color, 0.5);
         directionalLight.castShadow = true;
         this.scene.add(directionalLight);
+
+        // Import alle models die nodig zijn
+        //await this.importModel("floating_island",400,15,40,15,0);
+        await this.importModel("untitled",400,15,40,15,0);
+        // await this.importModel("SM_HUT_1",2,10,6,40,0);
+        // await this.importModel("SM_HUT_2",2,20,6,-4,1);
+        // await this.importModel("SM_HUT_3",2,-30,6,40,0);
+        await this.importModel("PUSHILIN_windmill",10,85,20,-30,0.5);
+        await this.importModel("lighthouse",2,-35,10,70,1.5);
+
+        // Tijdelijke models voor de crates, omdat de backend nog niet af is
+        await this.importModel("CUPIC_AIRSHIP",0.20,-75,30,10,0);
+        await this.importModel("crate",10,10,30,12,0.5);
+        await this.importModel("crate",10,20,30,12,0.5);
+        await this.importModel("crate",10,30,30,12,0.5);
+
+        return true;
+
 
         // var geometry = new THREE.PlaneGeometry(1000, 1000, 1000);
         // var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/water.jpg"), side: THREE.DoubleSide });
@@ -79,21 +91,25 @@ class generationService {
         // });
     }
 
-    async importModel(name, size, xpos, ypos, zpos, rotation) {
-        const objLoader = new OBJLoader2();
-        const mtlLoader = new MTLLoader();
-        mtlLoader.load('../../assets/models/' + name + '.mtl', (mtlParseResult) => {
-            let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
-            objLoader.addMaterials(materials);
-            objLoader.load('../../assets/models/' + name + '.obj', (root) => {
-                root.scale.set(size, size, size);
-                root.position.x = xpos;
-                root.position.y = ypos;
-                root.position.z = zpos;
-                root.castShadow = true;
-                root.receiveShadow = true;
-                root.rotation.y = Math.PI * rotation;
-                this.scene.add(root);
+    importModel(name, size, xpos, ypos, zpos, rotation) {
+        return new Promise(resolve => {
+            console.log('Loading in model: ', name);
+            const objLoader = new OBJLoader2();
+            const mtlLoader = new MTLLoader();
+            mtlLoader.load('../../assets/models/' + name + '.mtl', (mtlParseResult) => {
+                let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
+                objLoader.addMaterials(materials);
+                objLoader.load('../../assets/models/' + name + '.obj', (root) => {
+                    root.scale.set(size, size, size);
+                    root.position.x = xpos;
+                    root.position.y = ypos;
+                    root.position.z = zpos;
+                    root.castShadow = true;
+                    root.receiveShadow = true;
+                    root.rotation.y = Math.PI * rotation;
+                    this.scene.add(root);
+                    resolve(true);
+                });
             });
         });
     }

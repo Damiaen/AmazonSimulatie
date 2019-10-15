@@ -8,7 +8,7 @@ let cameraControls;
 let _generationService;
 let _socketService;
 
-function init() {
+async function init() {
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1500);
     cameraControls = new THREE.OrbitControls(camera);
     camera.position.z = 15;
@@ -23,7 +23,8 @@ function init() {
 
     window.addEventListener('resize', onWindowResize, false);
     _generationService = new generationService();
-    _generationService.initWorld();
+    const test = await _generationService.setupWorld();
+    console.log(test);
 
     _socketService = new socketService(_generationService);
     _socketService.connect();
