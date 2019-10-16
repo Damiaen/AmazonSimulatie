@@ -21,7 +21,7 @@ public class World implements Model {
      */
     private List<Object3D> robots;
     private List<WorldTile> worldTiles;
-
+    private List<Node> Nodes;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -42,14 +42,28 @@ public class World implements Model {
 
     private List<WorldTile> GenerateWorldTiles(int worldWidth, int worldHeigth, int worldLength)
     {
-        List<WorldTile> Tiles = new ArrayList<>();
+        List<WorldTile> tiles = new ArrayList<>();
         for (int z = 0; z < worldLength; z++){
             for (int x = 0; x < worldWidth; x++){
-                Tiles.add(new WorldTile(x,0,z,1,1,1,null));
+                tiles.add(new WorldTile(x,0,z,1,1,1));
             }
         }
-        return Tiles;
+        return tiles;
     }
+
+    private List<Node> GenerateNodes(int worldWidth, int worldLength)
+    {
+        List<Node> nodes = new ArrayList<>();
+        for (int z = 0; z < worldLength; z++){
+            for (int x = 0; x < worldWidth; x++){
+                nodes.add(new Node(x + 0.5,1,z + 0.5));
+            }
+        }
+
+
+        return null;
+    }
+
     private void FillNeighbours(List<Node> nodes,int worldWidth, int worldLength)
     {
         /*

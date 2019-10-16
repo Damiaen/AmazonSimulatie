@@ -15,9 +15,6 @@ public class WorldTile implements Object3D,Updatable
     private double length;
     private double height;
 
-    private Node lastVisited;
-    private Node node;
-
     /*
     -- object gets a new target tile
     -- object moves by given set of tiles
@@ -26,7 +23,7 @@ public class WorldTile implements Object3D,Updatable
 
      */
 
-    public WorldTile (double x, double y, double z, double width, double length, double height,Node node)
+    public WorldTile (double x, double y, double z, double width, double length, double height)
     {
         this.x = x;
         this.y = y;
@@ -34,24 +31,7 @@ public class WorldTile implements Object3D,Updatable
         this.width = width;
         this.length = length;
         this.height = height;
-        this.node = node;
     }
-
-
-    private boolean Occupied(double x, double y, double z)
-    {
-        if (x < this.x && x > this.x + width) {
-            return false;
-        }
-        if (y < this.y && y > this.y + height) {
-            return false;
-        }
-        if (z < this.z && z > this.z + length) {
-            return false;
-        }
-        return true;
-    }
-
 
     @Override
     public String getUUID() {

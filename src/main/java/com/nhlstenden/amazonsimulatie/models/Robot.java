@@ -1,5 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.List;
 import java.util.UUID;
 
 /*
@@ -17,6 +18,9 @@ class Robot implements Object3D, Updatable {
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
+
+    private Node Target;
+    private List<Node> Path;
 
     public Robot() {
         this.uuid = UUID.randomUUID();
@@ -36,14 +40,15 @@ class Robot implements Object3D, Updatable {
      * in de view)
      */
     @Override
-    public boolean update() {
-        if(x < 15) {
-            this.x += 0.5;
-        } else {
-            this.z += 0.5;
-        }
-        
+    public boolean update()
+    {
+
         return true;
+    }
+
+    private void SetTarget()
+    {
+
     }
 
     @Override

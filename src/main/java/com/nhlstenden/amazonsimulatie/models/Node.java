@@ -4,8 +4,21 @@ import java.util.List;
 
 public class Node
 {
+    private double x;
+    private double y;
+    private double z;
+
     int weight;
     List<Node> neighbours;
+
+
+    public Node (double x,double y, double z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.weight = 1;
+    }
 
     public int GetWeight() {return this.weight;}
 
@@ -20,14 +33,6 @@ public class Node
 
     public List<Node> GetNeighbours() {return neighbours;}
 
-    public void SetNeighbour (Node node)
-    {
-        if (!neighbours.contains(node)) {
-            neighbours.add(node);
-        } else {
-            return;
-        }
-    }
     public void SetNeighbours(List<Node> nodes)
     {
         for (int i = 0; i < nodes.size(); i++){
