@@ -12,13 +12,13 @@ public class Dijkstra {
          */
 
         private Graph graph;
-        private ArrayList<Edge> edges;
+        private List<Edge> edges;
         private Set<Node> unsearched;
         private Set<Node> searched;
 
         public Dijkstra(Graph graph) {
             this.graph = graph;
-            this.edges = new ArrayList(graph.getEdges());
+            this.edges = graph.getEdges();
         }
 
         /*

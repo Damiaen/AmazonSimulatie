@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-    private List nodes;
-    private List edges;
+    private List<Node> nodes;
+    private List<Edge> edges;
 
     public Graph(List nodes, List edges) {
         this.nodes = nodes;
         this.edges = edges;
     }
 
-    public List getEdges() {
+    public List<Edge> getEdges() {
         return edges;
     }
 
-    public List getNodes() {
+    public List<Node> getNodes() {
         return nodes;
     }
 }
