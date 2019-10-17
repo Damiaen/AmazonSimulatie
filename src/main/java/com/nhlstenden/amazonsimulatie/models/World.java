@@ -1,7 +1,11 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import javafx.scene.control.Alert;
+import sun.rmi.runtime.Log;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +41,9 @@ public class World implements Model {
         this.robots = new ArrayList<>();
         this.robots.add(new Robot());
 
-        this.worldTiles = GenerateWorldTiles(10,1,10);
+        //this.worldTiles = GenerateWorldTiles(10,1,10);
+        GenerateNodes(7,5);
+
     }
 
     private List<WorldTile> GenerateWorldTiles(int worldWidth, int worldHeigth, int worldLength)
@@ -54,14 +60,29 @@ public class World implements Model {
     private List<Node> GenerateNodes(int worldWidth, int worldLength)
     {
         List<Node> nodes = new ArrayList<>();
-        for (int z = 0; z < worldLength; z++){
-            for (int x = 0; x < worldWidth; x++){
-                nodes.add(new Node(x + 0.5,1,z + 0.5));
+        for (int z = 0; z < worldLength; z++)
+        {
+            for (int x = 0; x < worldWidth; x++)
+            {
+                if (x == 0 && z == 0) {
+                    nodes.add(new Node(x, 1, z,3));
+                    System.out.print(x + "-" + 1 + "-" + z + " ");
+                }
+                if (x == 3 && z == 0) {
+                    nodes.add(new Node(x, 1, z,3));
+                    System.out.print(x + "-" + 1 + "-" + z+ " ");
+                }
+                if (x == 6 && z == 0) {
+                    nodes.add(new Node(x, 1, z,3));
+                    System.out.print(x + "-" + 1 + "-" + z+ " ");
+                }
+                if (z > 1) {
+                    nodes.add(new Node(x, 1, z,1));
+                    System.out.print(x + "-" + 1 + "-" + z + " ");
+                }
             }
         }
-
-
-        return null;
+        return Nodes;
     }
 
     private void FillNeighbours(List<Node> nodes,int worldWidth, int worldLength)
@@ -74,30 +95,22 @@ public class World implements Model {
             world length
          */
 
-        for (int i = 0; i < worldLength; i++)
-        {
-            for (int j = 0; j < worldWidth; j++) {
-                List<Node> t = new ArrayList<>();
+        /*
+        3 rijen aan dozen, 4 per rij
+        1 hoofddok
+        5 x 7
+        .- - -.- - -.
+        |           |
+        .           .
+        |           |
+        .-.-.-.-.-.-.
+        |     |     |
+        .-.-.-.-.-.-.
+        |     |     |
+        .-.-.-.-.-.-.
+         */
 
-                // up
-                if (i > 0 ) {
-                    t.add(nodes.get(j + (i * 10)));
-                }
-                // right
-                if (j == worldWidth - 1) {
-                    t.add(nodes.get(j + (i * 10) + 1));
-                }
-                // down
-                if (i < worldLength -1) {
-                    t.add(nodes.get(j + (i * 10)));
-                }
-                // left
-                if (j - 1 >= 0) {
-                    t.add(nodes.get(j + (i * 10) - 1));
-                }
-                nodes.get(j + (i * 10)).SetNeighbours(t);
-            }
-        }
+
     }
 
     /*
