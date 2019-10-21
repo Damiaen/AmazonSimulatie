@@ -1,19 +1,19 @@
 import {socketService} from './socketService.js';
 import {generationService} from "./generationService.js";
 
-var camera, scene, renderer;
-var cameraControls;
+let camera, renderer;
+let cameraControls;
 
 
 let _generationService;
 let _socketService;
 
-function init() {
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+async function init() {
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1500);
     cameraControls = new THREE.OrbitControls(camera);
     camera.position.z = 15;
-    camera.position.y = 5;
-    camera.position.x = 15;
+    camera.position.y = 140;
+    camera.position.x = 200;
     cameraControls.update();
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -23,7 +23,8 @@ function init() {
 
     window.addEventListener('resize', onWindowResize, false);
     _generationService = new generationService();
-    _generationService.initWorld();
+    const test = await _generationService.setupWorld();
+    console.log(test);
 
     _socketService = new socketService(_generationService);
     _socketService.connect();

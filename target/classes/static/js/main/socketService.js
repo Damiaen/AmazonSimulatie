@@ -15,7 +15,7 @@ class socketService {
 
         this.socket.onmessage = e => {
             let command = this.parseCommand(e.data);
-            //console.log(command);
+            // console.log('Recieved command:', command);
             if (command.command === 'object_update') {
                 this._worldObjectManger.updateObject(command);
             }
