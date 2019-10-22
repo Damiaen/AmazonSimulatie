@@ -52,7 +52,7 @@ class generationService {
         // await this.importModel("lighthouse",2,-35,10,70,1.5);
 
         // Tijdelijke models voor de crates, omdat de backend nog niet af is
-        await this.importModel("CUPIC_AIRSHIP",0.20,20,30,-100,0.5);
+        // this.importModel("CUPIC_AIRSHIP",0.20,20,30,-100,0.5);
         // await this.importModel("crate",10,10,30,12,0.5);
         // await this.importModel("crate",10,30,30,12,0.5);
 
@@ -70,20 +70,20 @@ class generationService {
 
     setupAudio() {
         // create an AudioListener and add it to the camera
-        var listener = new THREE.AudioListener();
-        camera.add( listener );
-
-        // create a global audio source
-        var sound = new THREE.Audio( listener );
-
-        // load a sound and set it as the Audio object's buffer
-        var audioLoader = new THREE.AudioLoader();
-        audioLoader.load( '../../assets/sound/background_music.ogg', function( buffer ) {
-            sound.setBuffer( buffer );
-            sound.setLoop( true );
-            sound.setVolume( 0.5 );
-            sound.play();
-        });
+        // var listener = new THREE.AudioListener();
+        // camera.add( listener );
+        //
+        // // create a global audio source
+        // var sound = new THREE.Audio( listener );
+        //
+        // // load a sound and set it as the Audio object's buffer
+        // var audioLoader = new THREE.AudioLoader();
+        // audioLoader.load( '../../assets/sound/background_music.ogg', function( buffer ) {
+        //     sound.setBuffer( buffer );
+        //     sound.setLoop( true );
+        //     sound.setVolume( 0.5 );
+        //     sound.play();
+        // });
     }
 
     importModel(name, size, xpos, ypos, zpos, rotation) {
@@ -109,9 +109,9 @@ class generationService {
         });
     }
 
-    async importTestModel(name, size, xpos, ypos, zpos, rotation) {
+    async importDynamicModel(name, size, rotation, command) {
         return new Promise(resolve => {
-            console.log('Loading in model: ', name);
+            console.log('Loading in dynamic model: ', name);
             const objLoader = new OBJLoader2();
             const mtlLoader = new MTLLoader();
             mtlLoader.load('../../assets/models/' + name + '.mtl', (mtlParseResult) => {
@@ -119,16 +119,16 @@ class generationService {
                 objLoader.addMaterials(materials);
                 objLoader.load('../../assets/models/' + name + '.obj', (root) => {
                     root.scale.set(size, size, size);
-                    root.position.x = xpos;
-                    root.position.y = ypos;
-                    root.position.z = zpos;
+                    root.position.x = command.parameters.x;
+                    root.position.y = command.parameters.y;
+                    root.position.z = command.parameters.z;
                     root.castShadow = true;
                     root.receiveShadow = true;
                     root.rotation.y = Math.PI * rotation;
-                    const group = new THREE.Group();
-                    group.add(root);
-                    this.scene.add(group);
-                    this.worldObjects[name] = group;
+                    // const group = new THREE.Group();
+                    // group.add(root);
+                    // this.scene.add(group);
+                    // this.worldObjects[name] = group;
                     resolve(root);
                 });
             });
@@ -143,9 +143,8 @@ class generationService {
         // Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
         // dan wordt het 3D model eerst aangemaakt in de 3D wereld.
         if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0) {
-            console.log('updating 3D object of: ', command.parameters.type);
+            console.log('Adding new model to scene: ', command.parameters.type);
             if (command.parameters.type === 'robot') {
-                // await this.createRobot(command);
                 await this.createBalloon(command);
             }
             if (command.parameters.type === 'ship') {
@@ -161,10 +160,16 @@ class generationService {
         const object = this.worldObjects[command.parameters.uuid];
 
         console.log('Updated Object:', object);
+        console.log('Gotten command:', command);
         console.log('List of WorldObjects:', this.worldObjects);
 
         if (object == null)
             return;
+
+        console.log(object.position.x);
+        console.log(command.parameters.x);
+        console.log(object.position.z);
+        console.log(command.parameters.z);
 
         object.position.x = command.parameters.x;
         object.position.y = command.parameters.y;
@@ -216,31 +221,37 @@ class generationService {
     }
 
     async createBalloon(command) {
-        console.log(command);
-        const balloon = await this.importModel("balloon",4,20,10,12,0.5);
+        const robot = await this.importDynamicModel("balloon",4,0.5, command);
+        console.log('Added robot model to 3D world: ', robot);
 
         const group = new THREE.Group();
-        group.add(balloon);
+        group.add(robot);
         this.scene.add(group);
         this.worldObjects[command.parameters.uuid] = group;
     }
 
-    async createShip() {
+    async createShip(command) {
+        const ship = await this.importDynamicModel("CUPIC_AIRSHIP", 0.20, 0.5, command);
+        console.log('Added ship model to 3D world: ', ship);
 
+        const group = new THREE.Group();
+        group.add(ship);
+        this.scene.add(group);
+        this.worldObjects[command.parameters.uuid] = group;
     }
 
     async createCrate(command) {
+        const crate = await this.importDynamicModel("crate", 0.20, 0.5, command);
+        console.log('Added crate model to 3D world: ', crate);
 
-        var i;
-        for (i = 2; i < 6; i++) {
-            const crate = await this.importTestModel("crate",10,30,30,12,0.5);
-            crate.position.y = 0.15 + i;
+        const group = new THREE.Group();
+        group.add(crate);
+        this.scene.add(group);
+        this.worldObjects[command.parameters.uuid] = group;
+    }
 
-            const group = new THREE.Group();
-            group.add(crate);
-            this.scene.add(group);
-            this.worldObjects[i] = group;
-        }
+    async clearWorld() {
+        this.worldObjects = {};
     }
 }
 

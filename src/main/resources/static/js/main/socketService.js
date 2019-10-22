@@ -23,10 +23,10 @@ class socketService {
             //this._worldObjectManger.updateWorldPosition(command);
         };
         this.socket.onclose = e => {
-            console.log('Error connecting. Attempting to reconnect every 1 sec.', e.reason);
+            console.log('Error connecting. Clearing worldObjects and attempting to reconnect.', e.reason);
             setTimeout(() => {
                 this.connect();
-            }, 1000);
+            }, 2000);
         };
     };
 
