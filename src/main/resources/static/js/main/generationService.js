@@ -101,6 +101,7 @@ class generationService {
                     root.position.z = zpos;
                     root.castShadow = true;
                     root.receiveShadow = true;
+                    root.name = "island";
                     root.rotation.y = Math.PI * rotation;
                     this.scene.add(root);
                     resolve(true);
@@ -159,17 +160,19 @@ class generationService {
         */
         const object = this.worldObjects[command.parameters.uuid];
 
-        console.log('Updated Object:', object);
-        console.log('Gotten command:', command);
-        console.log('List of WorldObjects:', this.worldObjects);
+        console.log(command.parameters.uuid);
+
+        // console.log('Updated Object:', object);
+        // console.log('Gotten command:', command);
+        // console.log('List of WorldObjects:', this.worldObjects);
 
         if (object == null)
             return;
 
-        console.log(object.position.x);
-        console.log(command.parameters.x);
-        console.log(object.position.z);
-        console.log(command.parameters.z);
+        // console.log(object.position.x);
+        // console.log(command.parameters.x);
+        // console.log(object.position.z);
+        // console.log(command.parameters.z);
 
         object.position.x = command.parameters.x;
         object.position.y = command.parameters.y;
@@ -237,7 +240,10 @@ class generationService {
         const group = new THREE.Group();
         group.add(ship);
         this.scene.add(group);
+        console.log(command.parameters.uuid);
         this.worldObjects[command.parameters.uuid] = group;
+        console.log(this.worldObjects[command.parameters.uuid]);
+        console.log(this.worldObjects);
     }
 
     async createCrate(command) {
@@ -251,7 +257,52 @@ class generationService {
     }
 
     async clearWorld() {
+        const _worldObjects = this.worldObjects;
         this.worldObjects = {};
+
+        // for (let i = 0, l = Object.keys(_worldObjects).length; i < l; i++) {
+        //     console.log(this.worldObjects[i]);
+        // }
+        //
+        const values = Object.values(_worldObjects);
+
+        console.log(this.scene);
+
+        // for (let data of values) {
+        //     console.log(data);
+        //     this.scene.remove(data);
+        // }
+
+        console.log(values);
+
+        var children_to_remove = [];
+        this.scene.traverse(function(child){
+            if(child.type == "Group"){
+                children_to_remove.push(child);
+            }
+        });
+
+        for (let child of children_to_remove) {
+            if (child.name != "island") {
+                this.scene.remove(child);
+            }
+        }
+
+        // Object.keys(_worldObjects).forEach(function(key) {
+        //     let test = _worldObjects[key];
+        //     console.log(key);
+        //     console.log(test);
+        //     console.log(test.uuid);
+        //
+        //     // for (let test of _worldObjects) {
+        //     //     console.log(test);
+        //     //     // var selectedObject = this.scene.getObjectByName(object.name);
+        //     //     // this.scene.remove(object);
+        //     // }
+        // });
+
+
+        // this.worldObjects = {};
     }
 }
 

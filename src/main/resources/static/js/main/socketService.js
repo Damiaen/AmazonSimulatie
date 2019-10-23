@@ -4,7 +4,7 @@ class socketService {
         this._worldObjectManger = w;
     }
 
-    connect() {
+    async connect() {
         this.socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connectToSimulation");
 
         // Connection opened
@@ -15,15 +15,16 @@ class socketService {
 
         this.socket.onmessage = e => {
             let command = this.parseCommand(e.data);
-            // console.log('Recieved command:', command);
             if (command.command === 'object_update') {
                 this._worldObjectManger.updateObject(command);
             }
-
-            //this._worldObjectManger.updateWorldPosition(command);
+            if (command.command === 'clear_world') {
+                this._worldObjectManger.clearWorld();
+            }
         };
         this.socket.onclose = e => {
             console.log('Error connecting. Clearing worldObjects and attempting to reconnect.', e.reason);
+            this._worldObjectManger.clearWorld();
             setTimeout(() => {
                 this.connect();
             }, 2000);

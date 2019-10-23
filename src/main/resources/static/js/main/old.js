@@ -113,18 +113,7 @@
                 scene.add(plane);
 */
                 // Import alle models die nodig zijn
-                importModel("floating_island",400,15,40,15,0);
-                importModel("SM_HUT_1",2,10,6,40,0);
-                importModel("SM_HUT_2",2,20,6,-4,1);
-                importModel("SM_HUT_3",2,-30,6,40,0);
-                importModel("PUSHILIN_windmill",10,85,20,-30,0.5);
-                importModel("lighthouse",2,-35,10,70,1.5);
-
-                // Tijdelijke models voor de crates, omdat de backend nog niet af is
-                importModel("CUPIC_AIRSHIP",0.20,-75,30,10,0);
-                importModel("crate",10,10,30,12,0.5);
-                importModel("crate",10,20,30,12,0.5);
-                importModel("crate",10,30,30,12,0.5);
+                this.importModel("floating_island",400,15,40,15,0);
 
                 // var geometry = new THREE.PlaneGeometry(5, 10, 5);
                 // var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/wood.jpg"), side: THREE.DoubleSide });
