@@ -8,13 +8,13 @@ import java.util.UUID;
  * 3D object is. Ook implementeerd deze class de interface Updatable. Dit is omdat
  * een robot geupdate kan worden binnen de 3D wereld om zich zo voort te bewegen.
  */
-class Robot implements Object3D, Updatable {
+class Crate implements Object3D, Updatable {
     private UUID uuid;
-    private String status = "IDLE";
+    private String status = "PICKUP";
 
-    private double x = -12;
-    private double y = 10;
-    private double z = -28;
+    private double x = -70;
+    private double y = 16;
+    private double z = -50;
 
     private double rotationX = 0;
     private double rotationY = 0;
@@ -23,7 +23,12 @@ class Robot implements Object3D, Updatable {
     private Node Target;
     private List<Node> Path;
 
-    public Robot() {
+    /*
+     * Status of the ship (Offloading packages etc.)
+     */
+    private Integer packageValue = 10;
+
+    public Crate() {
         this.uuid = UUID.randomUUID();
     }
 
@@ -43,24 +48,11 @@ class Robot implements Object3D, Updatable {
     @Override
     public boolean update()
     {
-        /*
-         * Quick spaghetti code for testing movement
-         */
-        if (z < 32 && x < 76) {
-            z++;
-        } else if (z >= 32 && x < 76) {
-            x++;
-        } else if (z > -28 && x == 76){
-            z--;
-        } else if (z == -28 && x > -12) {
-            x--;
-        }
         return true;
     }
 
-    private void SetTarget()
-    {
-
+    public int getValue() {
+        return this.packageValue;
     }
 
     @Override
@@ -76,7 +68,7 @@ class Robot implements Object3D, Updatable {
          * is op de client, en die verstuurd moet kunnen worden naar de browser. In de
          * javascript code wordt dit dan weer verder afgehandeld.
          */
-        return Robot.class.getSimpleName().toLowerCase();
+        return Crate.class.getSimpleName().toLowerCase();
     }
 
     @Override

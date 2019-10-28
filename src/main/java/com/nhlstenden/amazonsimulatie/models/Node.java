@@ -1,7 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Node {
 
@@ -14,7 +13,7 @@ public class Node {
     private Node previous;
 
 
-    public Node(double x, double y, double z) {
+    public Node(int i, double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;

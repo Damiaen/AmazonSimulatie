@@ -1,7 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import javafx.scene.control.Alert;
-import sun.rmi.runtime.Log;
+
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -24,6 +23,8 @@ public class World implements Model {
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
     private List<Object3D> robots;
+    private List<Object3D> ships;
+    private List<Object3D> crates;
     private List<WorldTile> worldTiles;
     private List<Node> Nodes;
 
@@ -41,6 +42,11 @@ public class World implements Model {
         this.robots = new ArrayList<>();
         this.robots.add(new Robot());
 
+        this.ships = new ArrayList<>();
+        this.ships.add(new Ship());
+
+        this.crates = new ArrayList<>();
+
         //this.worldTiles = GenerateWorldTiles(10,1,10);
         GenerateNodes(7,5);
 
@@ -51,7 +57,7 @@ public class World implements Model {
         List<WorldTile> tiles = new ArrayList<>();
         for (int z = 0; z < worldLength; z++){
             for (int x = 0; x < worldWidth; x++){
-                tiles.add(new WorldTile(x,0,z,1,1,1));
+                tiles.add(new WorldTile(x,0,z,1,1,1, "empty"));
             }
         }
         return tiles;
@@ -131,6 +137,22 @@ public class World implements Model {
                 }
             }
         }
+
+        for (Object3D object : this.ships) {
+            if(object instanceof Updatable) {
+                if (((Updatable)object).update()) {
+                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
+                }
+            }
+        }
+
+        for (Object3D object : this.crates) {
+            if(object instanceof Updatable) {
+                if (((Updatable)object).update()) {
+                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
+                }
+            }
+        }
     }
 
     /*
@@ -151,6 +173,14 @@ public class World implements Model {
         ArrayList<Object3D> returnList = new ArrayList<>();
 
         for(Object3D object : this.robots) {
+            returnList.add(new ProxyObject3D(object));
+        }
+
+        for(Object3D object : this.ships) {
+            returnList.add(new ProxyObject3D(object));
+        }
+
+        for(Object3D object : this.crates) {
             returnList.add(new ProxyObject3D(object));
         }
 

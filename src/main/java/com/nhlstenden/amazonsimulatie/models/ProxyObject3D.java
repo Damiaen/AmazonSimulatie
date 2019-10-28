@@ -33,6 +33,11 @@ public class ProxyObject3D implements Object3D {
     }
 
     @Override
+    public String getStatus() {
+        return this.object.getStatus();
+    }
+
+    @Override
     public double getX() {
         return this.object.getX();
     }

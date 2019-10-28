@@ -10,6 +10,7 @@ package com.nhlstenden.amazonsimulatie.models;
 public interface Object3D {
     String getUUID();
     String getType();
+    String getStatus();
 
     double getX();
     double getY();

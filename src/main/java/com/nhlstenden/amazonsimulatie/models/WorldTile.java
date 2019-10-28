@@ -15,15 +15,16 @@ public class WorldTile implements Object3D,Updatable
     private double length;
     private double height;
 
+    private String status;
+
     /*
     -- object gets a new target tile
     -- object moves by given set of tiles
     -- if object moves to a new tile. this new tile will be Occupied if the current XY values are in range of the values of the tile
     --
-
      */
 
-    public WorldTile (double x, double y, double z, double width, double length, double height)
+    public WorldTile (double x, double y, double z, double width, double length, double height, String status)
     {
         this.x = x;
         this.y = y;
@@ -31,6 +32,12 @@ public class WorldTile implements Object3D,Updatable
         this.width = width;
         this.length = length;
         this.height = height;
+        this.status = status;
+    }
+
+    @Override
+    public String getStatus() {
+        return this.status;
     }
 
     @Override
