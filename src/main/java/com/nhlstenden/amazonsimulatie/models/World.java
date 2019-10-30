@@ -4,7 +4,6 @@ package com.nhlstenden.amazonsimulatie.models;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class World implements Model {
      * Deze objecten moeten uiteindelijk ook in de lijst passen (overerving). Daarom is dit
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
-    private List<Object3D> robots;
+    private List<Robot> robots;
     private List<Object3D> ships;
     private List<Object3D> crates;
     private List<WorldTile> worldTiles;
@@ -48,7 +47,7 @@ public class World implements Model {
         this.crates = new ArrayList<>();
 
         //this.worldTiles = GenerateWorldTiles(10,1,10);
-        GenerateNodes(7,5);
+        this.Nodes = GenerateNodes(7,5);
 
     }
 
@@ -88,7 +87,7 @@ public class World implements Model {
                 }
             }
         }
-        return Nodes;
+        return nodes;
     }
 
     private void FillNeighbours(List<Node> nodes,int worldWidth, int worldLength)
@@ -150,6 +149,15 @@ public class World implements Model {
             if(object instanceof Updatable) {
                 if (((Updatable)object).update()) {
                     pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
+                }
+            }
+        }
+
+        if (this.ships.get(0).getStatus().equals("UNLOADING")) {
+            for (Robot robot: this.robots) {
+                if (robot.getStatus().equals("IDLE")) {
+                    // Set robot navigation path, currently send all nodes for testing
+                    robot.SetTarget(this.Nodes);
                 }
             }
         }

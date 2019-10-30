@@ -101,6 +101,7 @@ class generationService {
                     root.position.z = zpos;
                     root.castShadow = true;
                     root.receiveShadow = true;
+                    root.name = "island";
                     root.rotation.y = Math.PI * rotation;
                     this.scene.add(root);
                     resolve(true);
@@ -143,9 +144,8 @@ class generationService {
         // Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
         // dan wordt het 3D model eerst aangemaakt in de 3D wereld.
         if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0) {
-            console.log('updating 3D object of: ', command.parameters.type);
+            console.log('Adding new model to scene: ', command.parameters.type);
             if (command.parameters.type === 'robot') {
-                // await this.createRobot(command);
                 await this.createBalloon(command);
             }
             if (command.parameters.type === 'ship') {
@@ -160,17 +160,19 @@ class generationService {
         */
         const object = this.worldObjects[command.parameters.uuid];
 
-        console.log('Updated Object:', object);
-        console.log('Gotten command:', command);
-        console.log('List of WorldObjects:', this.worldObjects);
+        console.log(command.parameters.uuid);
+
+        // console.log('Updated Object:', object);
+        // console.log('Gotten command:', command);
+        // console.log('List of WorldObjects:', this.worldObjects);
 
         if (object == null)
             return;
 
-        console.log(object.position.x);
-        console.log(command.parameters.x);
-        console.log(object.position.z);
-        console.log(command.parameters.z);
+        // console.log(object.position.x);
+        // console.log(command.parameters.x);
+        // console.log(object.position.z);
+        // console.log(command.parameters.z);
 
         object.position.x = command.parameters.x;
         object.position.y = command.parameters.y;
@@ -223,7 +225,7 @@ class generationService {
 
     async createBalloon(command) {
         const robot = await this.importDynamicModel("balloon",4,0.5, command);
-        console.log(robot);
+        console.log('Added robot model to 3D world: ', robot);
 
         const group = new THREE.Group();
         group.add(robot);
@@ -233,27 +235,74 @@ class generationService {
 
     async createShip(command) {
         const ship = await this.importDynamicModel("CUPIC_AIRSHIP", 0.20, 0.5, command);
-
         console.log('Added ship model to 3D world: ', ship);
 
         const group = new THREE.Group();
         group.add(ship);
         this.scene.add(group);
+        console.log(command.parameters.uuid);
         this.worldObjects[command.parameters.uuid] = group;
+        console.log(this.worldObjects[command.parameters.uuid]);
+        console.log(this.worldObjects);
     }
 
     async createCrate(command) {
+        const crate = await this.importDynamicModel("crate", 0.20, 0.5, command);
+        console.log('Added crate model to 3D world: ', crate);
 
-        var i;
-        for (i = 2; i < 6; i++) {
-            const crate = await this.importTestModel("crate",10,30,30,12,0.5);
-            crate.position.y = 0.15 + i;
+        const group = new THREE.Group();
+        group.add(crate);
+        this.scene.add(group);
+        this.worldObjects[command.parameters.uuid] = group;
+    }
 
-            const group = new THREE.Group();
-            group.add(crate);
-            this.scene.add(group);
-            this.worldObjects[i] = group;
+    async clearWorld() {
+        const _worldObjects = this.worldObjects;
+        this.worldObjects = {};
+
+        // for (let i = 0, l = Object.keys(_worldObjects).length; i < l; i++) {
+        //     console.log(this.worldObjects[i]);
+        // }
+        //
+        const values = Object.values(_worldObjects);
+
+        console.log(this.scene);
+
+        // for (let data of values) {
+        //     console.log(data);
+        //     this.scene.remove(data);
+        // }
+
+        console.log(values);
+
+        var children_to_remove = [];
+        this.scene.traverse(function(child){
+            if(child.type == "Group"){
+                children_to_remove.push(child);
+            }
+        });
+
+        for (let child of children_to_remove) {
+            if (child.name != "island") {
+                this.scene.remove(child);
+            }
         }
+
+        // Object.keys(_worldObjects).forEach(function(key) {
+        //     let test = _worldObjects[key];
+        //     console.log(key);
+        //     console.log(test);
+        //     console.log(test.uuid);
+        //
+        //     // for (let test of _worldObjects) {
+        //     //     console.log(test);
+        //     //     // var selectedObject = this.scene.getObjectByName(object.name);
+        //     //     // this.scene.remove(object);
+        //     // }
+        // });
+
+
+        // this.worldObjects = {};
     }
 }
 

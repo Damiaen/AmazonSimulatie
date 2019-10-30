@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd50a7f1-c99c-4fdb-a215-4f5aa17e74ce" name="Default Changelist" comment="" />
+    <list default="true" id="cd50a7f1-c99c-4fdb-a215-4f5aa17e74ce" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Robot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Ship.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Object3D.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Object3D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/ProxyObject3D.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/ProxyObject3D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Robot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Robot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/World.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/World.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/WorldTile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/WorldTile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/views/DefaultWebSocketView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/views/DefaultWebSocketView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/generationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/main/generationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/socketService.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/main/socketService.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +32,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1RxkG0Qa8ChApiMySmInTPDuElR" />
@@ -23,9 +44,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.nhlstenden.amazonsimulatie.models" />
+      <recent name="com.nhlstenden.amazonsimulatie.controllers" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Projects\AmazonSimulatie\src\main\resources\static\js\lib" />
       <recent name="C:\Projects\AmazonSimulatie\src\main\resources\static\assets\models\textures" />
@@ -72,7 +100,44 @@
       <workItem from="1571325325694" duration="2914000" />
       <workItem from="1570632942648" duration="2700000" />
       <workItem from="1571328927017" duration="669000" />
+      <workItem from="1571657056390" duration="4383000" />
+      <workItem from="1571743692510" duration="4450000" />
+      <workItem from="1571826281894" duration="345000" />
+      <workItem from="1571827199870" duration="6078000" />
+      <workItem from="1571838412809" duration="1111000" />
+      <workItem from="1572255904772" duration="12407000" />
+      <workItem from="1572269465569" duration="245000" />
+      <workItem from="1572430913029" duration="5872000" />
     </task>
+    <task id="LOCAL-00001" summary="Updated island model so it looks like design.">
+      <created>1571661154910</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571661154910</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added movement from backend to frontend ships/robots and crates">
+      <created>1571748071523</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1571748071523</updated>
+    </task>
+    <task id="LOCAL-00003" summary="When client disconnects from backend, all objects get removed from view">
+      <created>1571833263571</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1571833263572</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added temporary code to test animations from backend to javascript code">
+      <created>1572269048175</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1572269048175</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -90,5 +155,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated island model so it looks like design." />
+    <MESSAGE value="Added movement from backend to frontend ships/robots and crates" />
+    <MESSAGE value="When client disconnects from backend, all objects get removed from view" />
+    <MESSAGE value="Added temporary code to test animations from backend to javascript code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added temporary code to test animations from backend to javascript code" />
   </component>
 </project>

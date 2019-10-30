@@ -23,13 +23,6 @@ class Ship implements Object3D, Updatable {
     private Node Target;
     private List<Node> Path;
 
-
-
-    /*
-     * How long should the ship offload the items
-     */
-    private Integer timer = 0;
-
     public Ship() {
         this.uuid = UUID.randomUUID();
     }
@@ -54,23 +47,16 @@ class Ship implements Object3D, Updatable {
             case "START":
                 this.x += 1;
                 if (x == 90) {
-                    this.status = "IDLE";
+                    this.status = "UNLOADING";
                 }
                 break;
-            case "IDLE":
-                this.timer++;
-                if (this.timer == 20) {
-                    spawnCrates();
-                }
-                if (this.timer > 40) {
-                    this.status = "END";
-                }
+            case "UNLOADING":
+                UnloadShip();
                 break;
-            case "END":
+            case "DEPART":
                 this.x += 1;
                 if (x == 250) {
                     this.x = -80;
-                    this.timer = 0;
                     this.status = "START";
                 }
                 break;
@@ -78,13 +64,16 @@ class Ship implements Object3D, Updatable {
         return true;
     }
 
-    private void spawnCrates() {
-        System.out.println("Supposed to be spawning crates now");
-    }
-
-    private void SetTarget()
+    /*
+     * Unload ship based on given command by World Model
+     */
+    private void UnloadShip()
     {
-        // Set crates that needs to get picked up
+        int timer = 0;
+        timer++;
+        if (timer > 10) {
+            this.status = "END";
+        }
     }
 
     @Override

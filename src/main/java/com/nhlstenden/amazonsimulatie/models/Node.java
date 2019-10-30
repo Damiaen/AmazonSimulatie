@@ -40,4 +40,14 @@ public class Node {
     public void setPrevious(Node node){ this.previous = node; }
 
     public Node getPrevious(){ return previous; }
+
+    public double getX() {
+        return this.x;
+    }
+    public double getZ() {
+        return this.z;
+    }
+    public double getY() {
+        return this.y;
+    }
 }

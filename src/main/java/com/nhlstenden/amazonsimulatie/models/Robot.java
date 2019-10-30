@@ -22,6 +22,7 @@ class Robot implements Object3D, Updatable {
 
     private Node Target;
     private List<Node> Path;
+    private Crate Crate;
 
     public Robot() {
         this.uuid = UUID.randomUUID();
@@ -43,24 +44,48 @@ class Robot implements Object3D, Updatable {
     @Override
     public boolean update()
     {
-        /*
-         * Quick spaghetti code for testing movement
-         */
-        if (z < 32 && x < 76) {
-            z++;
-        } else if (z >= 32 && x < 76) {
-            x++;
-        } else if (z > -28 && x == 76){
-            z--;
-        } else if (z == -28 && x > -12) {
-            x--;
+        switch(status) {
+            case "IDLE":
+                // Standings still at base location
+                break;
+            case "WORKING":
+                UpdatePathFinding();
+                // Pathfinding with crate
+                break;
+            case "RETURNING":
+                // Returning to base position code
+                break;
         }
         return true;
     }
 
-    private void SetTarget()
-    {
+    private void UpdatePathFinding() {
+            if (this.Path.size() > 1)
+            {
 
+//                double sane1X = this.Path.get(0).getX();
+//                double sane1Z = this.Path.get(0).getZ();
+//                double sane2X = this.Path.get(1).getX();
+//                double sane2Z = this.Path.get(1).getZ();
+//
+//                if (this.x < sane2X)
+//                {
+                    this.x =+ 1;
+                    this.y =+ 1;
+                    this.z =+ this.z;
+                    this.Path.remove(0);
+//                }
+            }
+            else
+            {
+                this.status = "IDLE";
+            }
+        }
+
+    void SetTarget(List<Node> list)
+    {
+        this.Path = list;
+        this.status = "WORKING";
     }
 
     @Override
