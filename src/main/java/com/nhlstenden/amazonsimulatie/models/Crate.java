@@ -8,13 +8,13 @@ import java.util.UUID;
  * 3D object is. Ook implementeerd deze class de interface Updatable. Dit is omdat
  * een robot geupdate kan worden binnen de 3D wereld om zich zo voort te bewegen.
  */
-class Robot implements Object3D, Updatable {
+class Crate implements Object3D, Updatable {
     private UUID uuid;
-    private String status = "IDLE";
+    private String status = "PICKUP";
 
-    private double x = -12;
-    private double y = 10;
-    private double z = -28;
+    private double x = -70;
+    private double y = 16;
+    private double z = -50;
 
     private double rotationX = 0;
     private double rotationY = 0;
@@ -22,9 +22,13 @@ class Robot implements Object3D, Updatable {
 
     private Node Target;
     private List<Node> Path;
-    private Crate Crate;
 
-    public Robot() {
+    /*
+     * Status of the ship (Offloading packages etc.)
+     */
+    private Integer packageValue = 10;
+
+    public Crate() {
         this.uuid = UUID.randomUUID();
     }
 
@@ -44,48 +48,11 @@ class Robot implements Object3D, Updatable {
     @Override
     public boolean update()
     {
-        switch(status) {
-            case "IDLE":
-                // Standings still at base location
-                break;
-            case "WORKING":
-                UpdatePathFinding();
-                // Pathfinding with crate
-                break;
-            case "RETURNING":
-                // Returning to base position code
-                break;
-        }
         return true;
     }
 
-    private void UpdatePathFinding() {
-            if (this.Path.size() > 1)
-            {
-
-//                double sane1X = this.Path.get(0).getX();
-//                double sane1Z = this.Path.get(0).getZ();
-//                double sane2X = this.Path.get(1).getX();
-//                double sane2Z = this.Path.get(1).getZ();
-//
-//                if (this.x < sane2X)
-//                {
-                    this.x =+ 1;
-                    this.y =+ 1;
-                    this.z =+ this.z;
-                    this.Path.remove(0);
-//                }
-            }
-            else
-            {
-                this.status = "IDLE";
-            }
-        }
-
-    void SetTarget(List<Node> list)
-    {
-        this.Path = list;
-        this.status = "WORKING";
+    public int getValue() {
+        return this.packageValue;
     }
 
     @Override
@@ -101,7 +68,7 @@ class Robot implements Object3D, Updatable {
          * is op de client, en die verstuurd moet kunnen worden naar de browser. In de
          * javascript code wordt dit dan weer verder afgehandeld.
          */
-        return Robot.class.getSimpleName().toLowerCase();
+        return Crate.class.getSimpleName().toLowerCase();
     }
 
     @Override
