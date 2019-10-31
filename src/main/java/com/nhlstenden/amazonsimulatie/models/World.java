@@ -46,77 +46,11 @@ public class World implements Model {
 
         this.crates = new ArrayList<>();
 
-        //this.worldTiles = GenerateWorldTiles(10,1,10);
-        this.Nodes = GenerateNodes(7,5);
-
     }
 
-    private List<WorldTile> GenerateWorldTiles(int worldWidth, int worldHeigth, int worldLength)
-    {
-        List<WorldTile> tiles = new ArrayList<>();
-        for (int z = 0; z < worldLength; z++){
-            for (int x = 0; x < worldWidth; x++){
-                tiles.add(new WorldTile(x,0,z,1,1,1, "empty"));
-            }
-        }
-        return tiles;
-    }
-
-    private List<Node> GenerateNodes(int worldWidth, int worldLength)
-    {
-        List<Node> nodes = new ArrayList<>();
-        for (int z = 0; z < worldLength; z++)
-        {
-            for (int x = 0; x < worldWidth; x++)
-            {
-                if (x == 0 && z == 0) {
-                    nodes.add(new Node(x, 1, z,3));
-                    System.out.print(x + "-" + 1 + "-" + z + " ");
-                }
-                if (x == 3 && z == 0) {
-                    nodes.add(new Node(x, 1, z,3));
-                    System.out.print(x + "-" + 1 + "-" + z+ " ");
-                }
-                if (x == 6 && z == 0) {
-                    nodes.add(new Node(x, 1, z,3));
-                    System.out.print(x + "-" + 1 + "-" + z+ " ");
-                }
-                if (z > 1) {
-                    nodes.add(new Node(x, 1, z,1));
-                    System.out.print(x + "-" + 1 + "-" + z + " ");
-                }
-            }
-        }
-        return nodes;
-    }
-
-    private void FillNeighbours(List<Node> nodes,int worldWidth, int worldLength)
-    {
-        /*
-            0 --> world width
-            |
-            |
-            \/
-            world length
-         */
-
-        /*
-        3 rijen aan dozen, 4 per rij
-        1 hoofddok
-        5 x 7
-        .- - -.- - -.
-        |           |
-        .           .
-        |           |
-        .-.-.-.-.-.-.
-        |     |     |
-        .-.-.-.-.-.-.
-        |     |     |
-        .-.-.-.-.-.-.
-         */
 
 
-    }
+
 
     /*
      * Deze methode wordt gebruikt om de wereld te updaten. Wanneer deze methode wordt aangeroepen,
@@ -193,5 +127,9 @@ public class World implements Model {
         }
 
         return returnList;
+    }
+
+    public List<Robot> getRobots() {
+        return robots;
     }
 }

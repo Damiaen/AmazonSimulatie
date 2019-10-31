@@ -1,10 +1,14 @@
 package com.nhlstenden.amazonsimulatie.controllers;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.nhlstenden.amazonsimulatie.base.Command;
 import com.nhlstenden.amazonsimulatie.models.Model;
 import com.nhlstenden.amazonsimulatie.models.Object3D;
+import com.nhlstenden.amazonsimulatie.models.World;
 import com.nhlstenden.amazonsimulatie.views.View;
 
 /*
@@ -12,10 +16,13 @@ import com.nhlstenden.amazonsimulatie.views.View;
  * een generieke class Controller. Hierdoor krijgt SimulationController gratis
  * functionaliteit mee voor het managen van views en een model.
  */
-public class SimulationController extends Controller {
+public class SimulationController extends Controller
+{
+    GraphGenerator graphGenerator;
 
     public SimulationController(Model model) {
         super(model); //Met dit onderdeel roep je de constructor aan van de superclass (Controller)
+        this.graphGenerator = new GraphGenerator();
     }
 
     /*

@@ -1,25 +1,29 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import java.util.ArrayList;
-
 public class Node {
 
+    private String name;
+
     private double x;
-    private double y;
     private double z;
 
-    private int distance = Integer.MAX_VALUE;
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private int distance;
     private Node previous;
+    private boolean isVisited;
 
 
-    public Node(int i, double x, double y, double z) {
+    public Node(String name,double x, double z) {
+        this.name = name;
         this.x = x;
-        this.y = y;
         this.z = z;
     }
 
-
+    public boolean getIsVisited() {
+        return isVisited;
+    }
+    public void setIsVisited(boolean b) {
+        isVisited = b;
+    }
 
     public int getDistance() {
         return distance;
@@ -27,14 +31,6 @@ public class Node {
 
     public void setDistance(int distance) {
         this.distance = distance;
-    }
-
-    public ArrayList<Edge> getEdges() {
-        return edges;
-    }
-
-    public void setEdges(ArrayList<Edge> edges) {
-        this.edges = edges;
     }
 
     public void setPrevious(Node node){ this.previous = node; }
@@ -47,7 +43,8 @@ public class Node {
     public double getZ() {
         return this.z;
     }
-    public double getY() {
-        return this.y;
+
+    public String getName() {
+        return this.name;
     }
 }

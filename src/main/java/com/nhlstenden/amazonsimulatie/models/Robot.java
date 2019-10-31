@@ -24,8 +24,11 @@ class Robot implements Object3D, Updatable {
     private List<Node> Path;
     private Crate Crate;
 
-    public Robot() {
+    private Dijkstra dijkstra;
+
+    public Robot(Dijkstra dijkstra) {
         this.uuid = UUID.randomUUID();
+        this.dijkstra = dijkstra;
     }
 
     /*
@@ -59,30 +62,28 @@ class Robot implements Object3D, Updatable {
         return true;
     }
 
-    private void UpdatePathFinding() {
-            if (this.Path.size() > 1)
-            {
+    private void UpdatePathFinding()
+    {
+        if (this.Path.size() > 1) {
+            /*
 
-//                double sane1X = this.Path.get(0).getX();
-//                double sane1Z = this.Path.get(0).getZ();
-//                double sane2X = this.Path.get(1).getX();
-//                double sane2Z = this.Path.get(1).getZ();
-//
-//                if (this.x < sane2X)
-//                {
-                    this.x =+ 1;
-                    this.y =+ 1;
-                    this.z =+ this.z;
-                    this.Path.remove(0);
-//                }
-            }
-            else
+            if (this.x < sane2X)
             {
-                this.status = "IDLE";
+                this.x = +1;
+                this.y = +1;
+                this.z = +this.z;
+                this.Path.remove(0);
             }
+        } else
+            {
+            this.status = "IDLE";
         }
 
-    void SetTarget(List<Node> list)
+             */
+        }
+    }
+
+    public void SetTarget(List<Node> list)
     {
         this.Path = list;
         this.status = "WORKING";
