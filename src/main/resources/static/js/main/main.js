@@ -4,7 +4,6 @@ import {generationService} from "./generationService.js";
 let camera, renderer;
 let cameraControls;
 
-
 let _generationService;
 let _socketService;
 
@@ -23,11 +22,8 @@ async function init() {
 
     window.addEventListener('resize', onWindowResize, false);
     _generationService = new generationService();
-    const test = await _generationService.setupWorld();
-    console.log(test);
-
     _socketService = new socketService(_generationService);
-    _socketService.connect();
+    await _socketService.connect();
 
     frameStep();
 }
