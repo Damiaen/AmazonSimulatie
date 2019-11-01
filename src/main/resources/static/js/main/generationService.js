@@ -10,42 +10,35 @@ class generationService {
     }
 
     async setupWorld() {
-        let skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
-        let skyboxMaterials = [
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //RIGHT
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //LEFT
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_up.png"), side: THREE.DoubleSide}), //TOP
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_down.png"), side: THREE.DoubleSide}), //BOTTOM
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //FRONT
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //BACK
-        ];
-        let skyboxMaterial = new THREE.MeshFaceMaterial(skyboxMaterials);
-        let skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
-        skybox.position.y = 1;
-        this.scene.add(skybox);
+        return new Promise(resolve => {
+            let skyboxGeometry = new THREE.BoxGeometry(1000, 1000, 1000);
+            let skyboxMaterials = [
+                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //RIGHT
+                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //LEFT
+                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_up.png"), side: THREE.DoubleSide}), //TOP
+                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_down.png"), side: THREE.DoubleSide}), //BOTTOM
+                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //FRONT
+                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/skybox/sea_base.png"), side: THREE.DoubleSide}), //BACK
+            ];
+            let skyboxMaterial = new THREE.MeshFaceMaterial(skyboxMaterials);
+            let skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+            skybox.position.y = 1;
+            this.scene.add(skybox);
 
-        const color = 0xFFFFFF;
-        const intensity = 0.4;
-        const light = new THREE.AmbientLight(color, intensity);
-        this.scene.add(light);
+            const color = 0xFFFFFF;
+            const intensity = 0.4;
+            const light = new THREE.AmbientLight(color, intensity);
+            this.scene.add(light);
 
-        let directionalLight = new THREE.DirectionalLight('#fff2cf', 0.8);
-        directionalLight.castShadow = true;
-        directionalLight.position.set(0.5,0.5,1);
-        this.scene.add(directionalLight);
+            let directionalLight = new THREE.DirectionalLight('#fff2cf', 0.8);
+            directionalLight.castShadow = true;
+            directionalLight.position.set(0.5,0.5,1);
+            this.scene.add(directionalLight);
 
-        await this.importModel("floating_island",400,15,40,15,0);
-
-        return true;
-
-        // var geometry = new THREE.PlaneGeometry(1000, 1000, 1000);
-        // var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/water.jpg"), side: THREE.DoubleSide });
-        // var plane = new THREE.Mesh(geometry, material);
-        // plane.rotation.x = Math.PI / 2.0;
-        // plane.position.x = 15;
-        // plane.position.z = 15;
-        // plane.position.y = -300;
-        // this.scene.add(plane);
+            this.importModel("floating_island",400,15,40,15,0).then(function(data) {
+                resolve(data);
+            });
+        });
     }
 
     /*

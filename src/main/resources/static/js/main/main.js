@@ -22,6 +22,8 @@ async function init() {
 
     window.addEventListener('resize', onWindowResize, false);
     _generationService = new generationService();
+    await _generationService.setupWorld();
+
     _socketService = new socketService(_generationService);
     await _socketService.connect();
 
