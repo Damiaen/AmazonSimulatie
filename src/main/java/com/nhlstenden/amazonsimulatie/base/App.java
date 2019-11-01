@@ -3,7 +3,9 @@ package com.nhlstenden.amazonsimulatie.base;
 import java.io.IOException;
 
 import com.nhlstenden.amazonsimulatie.controllers.Controller;
+import com.nhlstenden.amazonsimulatie.controllers.GraphGenerator;
 import com.nhlstenden.amazonsimulatie.controllers.SimulationController;
+import com.nhlstenden.amazonsimulatie.models.Graph;
 import com.nhlstenden.amazonsimulatie.models.World;
 import com.nhlstenden.amazonsimulatie.views.DefaultWebSocketView;
 
@@ -46,15 +48,17 @@ public class App extends SpringBootServletInitializer implements WebSocketConfig
     //De App is de applicatie en heeft de controller voor de simulatie in zich
     private Controller controller;
 
-   /*
+    /*
     * De constructor wordt uitgevoerd wanneer de app wordt opgebouwd. Je zult alleen
     * geen new App() tegenkomen. Dit doet Spring namelijk al voor je bij
     * SpringApplication.run().
     */
-    public App() {
-        World world = new World();
-        SimulationController simulationController = new SimulationController(world);
-        this.controller = simulationController;
+    public App()
+    {
+        GraphGenerator graphGenerator = new GraphGenerator();
+        Graph graph = graphGenerator.Setup();
+        World world = new World(graph);
+        this.controller = new SimulationController(world);
         this.controller.start();
     }
 

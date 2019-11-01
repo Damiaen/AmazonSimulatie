@@ -28,7 +28,7 @@ class Crate implements Object3D, Updatable {
      */
     private Integer packageValue = 10;
 
-    public Crate() {
+    private Crate() {
         this.uuid = UUID.randomUUID();
     }
 

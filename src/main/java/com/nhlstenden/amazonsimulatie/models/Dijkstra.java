@@ -9,27 +9,28 @@ public class Dijkstra {
      * This implementation of Dijkstra's algorithm updates all nodes in a graph with their shortest distance/path to a given node
      */
 
-    private Graph graph;
     private List<Edge> edges;
+    private List<Node> nodes;
 
     public Dijkstra(Graph graph) {
-        this.graph = graph;
         this.edges = graph.getEdges();
+        this.nodes = graph.getNodes();
     }
 
-    public List<Node> Dijkstra(Node startNode, Node eindNode, List<Node> nodes) {
-        List<Node> unvisitedList = nodes;
+    public List<Node> DijkstraAlgoritm(Node startNode, Node eindNode) {
 
-        for (Node node : nodes) {
+        List<Node> nodeList = nodes;
+
+        for (Node node : nodeList) {
             node.setDistance(1000000);
             node.setIsVisited(false);
         }
         startNode.setDistance(0);
 
-        while (unvisitedList.size() > 0) {
+        while (nodeList.size() > 0) {
             Node nextNode = startNode;
             double min = 10000000;
-            for (Node node : nodes) {
+            for (Node node : nodeList) {
                 if (node.getDistance() < min && !node.getIsVisited()) {
                     min = node.getDistance();
                     nextNode = node;
@@ -59,7 +60,7 @@ public class Dijkstra {
             }
 
             nextNode.setIsVisited(true);
-            unvisitedList.remove(nextNode);
+            nodeList.remove(nextNode);
         }
 
         List<Node> routeList = new ArrayList<>();

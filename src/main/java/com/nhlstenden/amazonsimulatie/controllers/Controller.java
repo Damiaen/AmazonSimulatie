@@ -20,11 +20,11 @@ public abstract class Controller implements Runnable, PropertyChangeListener {
     private List<View> views;
     private Model model;
 
-    public Controller(Model model) {
+    Controller(Model model) {
         this(model, new ArrayList<View>());
     }
 
-    public Controller(Model model, List<View> views) {
+    private Controller(Model model, List<View> views) {
         this.model = model;
         this.model.addObserver(this); //Automatisch wordt deze controller toegevoegd aan het model om updates te ontvangen.
         this.views = new ArrayList<>(views);
@@ -45,11 +45,11 @@ public abstract class Controller implements Runnable, PropertyChangeListener {
      * Returns the views list. Be advised that this is the internal list, for use by the controller only.
      * @return The internal list of views.
      */
-    protected List<View> getViews() {
+    List<View> getViews() {
         return this.views;
     }
 
-    protected void removeView(View view) {
+    void removeView(View view) {
         this.views.remove(view);
     }
 
@@ -57,7 +57,7 @@ public abstract class Controller implements Runnable, PropertyChangeListener {
      * Returns the internal model used by the controller.
      * @return The internal model.
      */
-    protected Model getModel() {
+    Model getModel() {
         return this.model;
     }
 

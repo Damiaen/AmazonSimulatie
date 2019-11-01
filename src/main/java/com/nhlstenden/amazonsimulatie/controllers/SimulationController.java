@@ -18,11 +18,9 @@ import com.nhlstenden.amazonsimulatie.views.View;
  */
 public class SimulationController extends Controller
 {
-    GraphGenerator graphGenerator;
 
     public SimulationController(Model model) {
         super(model); //Met dit onderdeel roep je de constructor aan van de superclass (Controller)
-        this.graphGenerator = new GraphGenerator();
     }
 
     /*
@@ -36,10 +34,12 @@ public class SimulationController extends Controller
     @Override
     public void run() {
         while (true) {
-            this.getModel().update();
+            if (this.getModel() != null)
+                this.getModel().update();
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

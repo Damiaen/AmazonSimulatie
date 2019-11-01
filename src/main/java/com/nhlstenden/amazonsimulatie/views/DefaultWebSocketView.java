@@ -17,7 +17,7 @@ import org.springframework.web.socket.WebSocketSession;
  * waarmee de view class kan communiceren met de browser.
  */
 public class DefaultWebSocketView implements View {
-    private WebSocketSession session;
+    private final WebSocketSession session;
     private Command onClose;
 
     public DefaultWebSocketView(WebSocketSession session) {

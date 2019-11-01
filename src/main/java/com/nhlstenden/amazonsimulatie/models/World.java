@@ -24,28 +24,31 @@ public class World implements Model {
     private List<Robot> robots;
     private List<Object3D> ships;
     private List<Object3D> crates;
-    private List<WorldTile> worldTiles;
-    private List<Node> Nodes;
+    private Graph graph;
+    boolean isUpdated = false;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
      * Het systeem werkt al as-is, dus dit hoeft niet aangepast te worden.
      */
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /*
      * De wereld maakt een lege lijst voor worldObjects aan. Daarin wordt nu één robot gestopt.
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
-    public World() {
+    public World(Graph graph)
+    {
         this.robots = new ArrayList<>();
-        this.robots.add(new Robot());
+        Dijkstra dijkstra = new Dijkstra(graph);
+        this.robots.add(new Robot(dijkstra,graph.getNodes().get(1)));
 
         this.ships = new ArrayList<>();
         this.ships.add(new Ship());
 
         this.crates = new ArrayList<>();
-
+        System.out.print(robots.size());
+        this.graph = graph;
     }
 
 
@@ -89,9 +92,10 @@ public class World implements Model {
 
         if (this.ships.get(0).getStatus().equals("UNLOADING")) {
             for (Robot robot: this.robots) {
-                if (robot.getStatus().equals("IDLE")) {
-                    // Set robot navigation path, currently send all nodes for testing
-                    robot.SetTarget(this.Nodes);
+                if (!isUpdated)
+                {
+                    robot.setTarget(graph.getNodes().get(12));
+                    isUpdated = true;
                 }
             }
         }

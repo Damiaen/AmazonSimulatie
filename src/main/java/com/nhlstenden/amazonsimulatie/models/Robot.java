@@ -1,5 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,25 +11,30 @@ import java.util.UUID;
  */
 class Robot implements Object3D, Updatable {
     private UUID uuid;
-    private String status = "IDLE";
+    private String status = "WORKING";
 
-    private double x = -12;
+    private double x = 0;
     private double y = 10;
-    private double z = -28;
+    private double z = 0;
 
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
 
-    private Node Target;
-    private List<Node> Path;
+    private Node target;
+    private List<Node> path;
     private Crate Crate;
 
     private Dijkstra dijkstra;
+    private Node currentNode;
 
-    public Robot(Dijkstra dijkstra) {
+    public Robot(Dijkstra dijkstra, Node node) {
         this.uuid = UUID.randomUUID();
         this.dijkstra = dijkstra;
+        this.path = new ArrayList<>();
+        this.currentNode = node;
+        this.x = currentNode.getX();
+        this.z = currentNode.getZ();
     }
 
     /*
@@ -52,7 +58,8 @@ class Robot implements Object3D, Updatable {
                 // Standings still at base location
                 break;
             case "WORKING":
-                UpdatePathFinding();
+                if (path.size() > 0)
+                    updatePathFinding();
                 // Pathfinding with crate
                 break;
             case "RETURNING":
@@ -62,30 +69,38 @@ class Robot implements Object3D, Updatable {
         return true;
     }
 
-    private void UpdatePathFinding()
-    {
-        if (this.Path.size() > 1) {
-            /*
+    private void updatePathFinding() {
 
-            if (this.x < sane2X)
-            {
-                this.x = +1;
-                this.y = +1;
-                this.z = +this.z;
-                this.Path.remove(0);
+        target = path.get(0);
+
+        if (this.x == target.getX() && this.z == target.getZ())
+        {
+            currentNode = path.get(0);
+            path.remove(0);
+        }
+        else
+        {
+            if (this.x != target.getX()) {
+                if (this.x > target.getX()) {
+                    this.x -= 0.25;
+                } else {
+                    this.x += 0.25;
+                }
             }
-        } else
-            {
-            this.status = "IDLE";
+            else {
+                if (this.z > target.getZ()) {
+                    this.z -= 0.25;
+                } else {
+                    this.z += 0.25;
+                }
+            }
         }
-
-             */
-        }
+        System.out.println(x + " " + z);
     }
 
-    public void SetTarget(List<Node> list)
+    public void setTarget(Node target)
     {
-        this.Path = list;
+        path = dijkstra.DijkstraAlgoritm(currentNode,target);
         this.status = "WORKING";
     }
 

@@ -10,17 +10,17 @@ import java.util.List;
 
 public class GraphGenerator
 {
-    Graph graph;
-    Dijkstra dijkstra;
+    private Dijkstra dijkstra;
 
     private List<Node> nodes = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
 
-    public void Setup()
+    public Graph Setup()
     {
         nodes = generateNodes();
         edges = generateEdges(nodes);
-        graph = new Graph(nodes,edges);
+        Graph graph = new Graph(nodes,edges);
+        return graph;
     }
 
     private List<Node> generateNodes()
@@ -133,8 +133,6 @@ public class GraphGenerator
                 if(e.getNode1() == n){
                     nodeEdges.add(e);
                 }
-
-
             }
             nodeEdges.clear();
         }
