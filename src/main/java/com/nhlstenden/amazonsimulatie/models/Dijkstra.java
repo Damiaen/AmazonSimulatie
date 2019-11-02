@@ -19,7 +19,7 @@ public class Dijkstra {
 
     public List<Node> DijkstraAlgoritm(Node startNode, Node eindNode) {
 
-        List<Node> nodeList = nodes;
+        List<Node> nodeList = this.nodes;
 
         for (Node node : nodeList) {
             node.setDistance(1000000);
@@ -75,6 +75,10 @@ public class Dijkstra {
         Collections.reverse(routeList);
         return routeList;
 
+    }
+
+    public List<Node> getNodes(){
+        return nodes;
     }
 
 }

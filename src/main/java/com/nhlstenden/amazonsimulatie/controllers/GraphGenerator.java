@@ -12,15 +12,11 @@ public class GraphGenerator
 {
     private Dijkstra dijkstra;
 
-    private List<Node> nodes = new ArrayList<>();
-    private List<Edge> edges = new ArrayList<>();
-
     public Graph Setup()
     {
-        nodes = generateNodes();
-        edges = generateEdges(nodes);
-        Graph graph = new Graph(nodes,edges);
-        return graph;
+        List<Node> nodes = generateNodes();
+        List<Edge> edges = generateEdges(nodes);
+        return new Graph(nodes, edges);
     }
 
     private List<Node> generateNodes()
@@ -28,37 +24,37 @@ public class GraphGenerator
         List<Node> nodes = new ArrayList<>();
 
         //1st row
-        nodes.add(new Node("Node0",-12,-30));
-        nodes.add(new Node("Node1",10,-30));
-        nodes.add(new Node("Node2",32,-30));
+        nodes.add(new Node("Node0",-12,-30,false));
+        nodes.add(new Node("Node1",10,-30,true));
+        nodes.add(new Node("Node2",32,-30,false));
         //2nd row
-        nodes.add(new Node("Node3",-12,-12));
-        nodes.add(new Node("Node4",10,-12));
-        nodes.add(new Node("Node5",32,-12));
+        nodes.add(new Node("Node3",-12,-12,false));
+        nodes.add(new Node("Node4",10,-12,false));
+        nodes.add(new Node("Node5",32,-12,false));
         //3rd row
-        nodes.add(new Node("Node6",-12,2));
-        nodes.add(new Node("Node7",-5,2));
-        nodes.add(new Node("Node8",3,2));
-        nodes.add(new Node("Node9",10,2));
-        nodes.add(new Node("Node10",17,2));
-        nodes.add(new Node("Node11",24,2));
-        nodes.add(new Node("Node12",32,2));
+        nodes.add(new Node("Node6",-12,2,false));
+        nodes.add(new Node("Node7",-5,2,true));
+        nodes.add(new Node("Node8",3,2,true));
+        nodes.add(new Node("Node9",10,2,false));
+        nodes.add(new Node("Node10",17,2,true));
+        nodes.add(new Node("Node11",24,2,true));
+        nodes.add(new Node("Node12",32,2,false));
         //4th row
-        nodes.add(new Node("Node13",-12,18));
-        nodes.add(new Node("Node14",-5,18));
-        nodes.add(new Node("Node15",3,18));
-        nodes.add(new Node("Node16",10,18));
-        nodes.add(new Node("Node17",17,18));
-        nodes.add(new Node("Node18",24,18));
-        nodes.add(new Node("Node19",32,18));
+        nodes.add(new Node("Node13",-12,18,false));
+        nodes.add(new Node("Node14",-5,18,true));
+        nodes.add(new Node("Node15",3,18,true));
+        nodes.add(new Node("Node16",10,18,false));
+        nodes.add(new Node("Node17",17,18,true));
+        nodes.add(new Node("Node18",24,18,true));
+        nodes.add(new Node("Node19",32,18,false));
         //5th row
-        nodes.add(new Node("Node20",-12,32));
-        nodes.add(new Node("Node21",-5,32));
-        nodes.add(new Node("Node22",3,32));
-        nodes.add(new Node("Node23",10,32));
-        nodes.add(new Node("Node24",17,32));
-        nodes.add(new Node("Node25",24,32));
-        nodes.add(new Node("Node26",32,32));
+        nodes.add(new Node("Node20",-12,32,false));
+        nodes.add(new Node("Node21",-5,32,true));
+        nodes.add(new Node("Node22",3,32,true));
+        nodes.add(new Node("Node23",10,32,false));
+        nodes.add(new Node("Node24",17,32,true));
+        nodes.add(new Node("Node25",24,32,true));
+        nodes.add(new Node("Node26",32,32,false));
 
         return nodes;
     }

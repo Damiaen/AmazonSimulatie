@@ -146,7 +146,7 @@ class generationService {
         if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0) {
             console.log('Adding new model to scene: ', command.parameters.type);
             if (command.parameters.type === 'robot') {
-                await this.createBalloon(command);
+                await this.createRobot(command);
             }
             if (command.parameters.type === 'ship') {
                 await this.createShip(command);
@@ -213,8 +213,10 @@ class generationService {
             }) // BACK
         ];
         const robot = new THREE.Mesh(geometry, cubeMaterials);
-        robot.position.y = 20;
-        robot.scale.set(10, 10, 10);
+        robot.position.z = 32;
+        robot.position.y = 10;
+        robot.position.x = 0;
+        robot.scale.set(8, 8, 8);
 
         const group = new THREE.Group();
         group.add(robot);
