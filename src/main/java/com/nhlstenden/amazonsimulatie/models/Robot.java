@@ -59,14 +59,29 @@ class Robot implements Object3D, Updatable {
     @Override
     public boolean update()
     {
+        //working with and without crate for frontend.
+
         switch(status) {
             case "IDLE":
                 // Standings still at base location
                 if (path.size() > 0) {
-                    status = "WORKING";
+                    if (getHasCrate()) {
+                        status = "WORKINGWITHCRATE";
+                    }
+                    else {
+                        status = "WORKINGWITHOUTCRATE";
+                    }
                 }
                 break;
-            case "WORKING":
+            case "WORKINGWITHCRATE":
+                if (path.size() == 0) {
+                    status = "IDLE";
+                    break;
+                }
+                updatePathFinding();
+                // Pathfinding with crate
+                break;
+            case "WORKINGWITHOUTCRATE":
                 if (path.size() == 0) {
                     status = "IDLE";
                     break;

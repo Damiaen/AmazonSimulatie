@@ -28,8 +28,8 @@ async function init() {
     await _generationService.setupWorld();
     console.log('Completed setting up world, opening socket connection');
 
-    _socketService = new socketService(_generationService);
-    await _socketService.connect();
+    // _socketService = new socketService(_generationService);
+    // await _socketService.connect();
 
     frameStep();
 

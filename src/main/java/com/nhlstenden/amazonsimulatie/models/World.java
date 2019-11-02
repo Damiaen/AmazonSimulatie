@@ -144,25 +144,25 @@ public class World implements Model {
                             if (currentNode == dockNode) {
                                 ship.addCrate(robot.getCrate());
                                 robot.setCrate(null);
-                                for (Node node : nodes) {
-                                    if (node.getCanHaveCrate() && node.getHasCrate()) {
-                                        robot.setTarget(node);
-                                        break;
-                                    }
-                                }
+
                             } else {
                                 robot.setTarget(dockNode);
                             }
                         }
                     }
                     else {
-                        if (currentNode == robot.getTarget() && currentNode.getCanHaveCrate()){
-                            currentNode.setHasCrate(true);
-                            currentNode.setCrate(robot.getCrate());
-                            robot.setCrate(null);
+                        if (currentNode == robot.getTarget() && currentNode.getCanHaveCrate() && currentNode.getHasCrate()){
+                            robot.setCrate(currentNode.getCrate());
+                            currentNode.setHasCrate(false);
+                            currentNode.setCrate(null);
+                        }
+                        for (Node node : nodes) {
+                            if (node.getCanHaveCrate() && node.getHasCrate()) {
+                                robot.setTarget(node);
+                                break;
+                            }
                         }
                     }
-
                 }
             }
         }

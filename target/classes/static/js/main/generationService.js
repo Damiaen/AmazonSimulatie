@@ -10,6 +10,7 @@ class generationService {
         this.socket = new socketService();
         this.worldObjects = {};
         this.loadedObjects = [];
+        this.loadedCrates = [];
     }
 
     async setupWorld() {
@@ -38,9 +39,10 @@ class generationService {
             directionalLight.position.set(0.5,0.5,1);
             this.scene.add(directionalLight);
 
-            this.importWorldModel().then().then((completedLoading) => {
+            this.importWorldModel().then((completedLoading) => {
                 console.log('Loading worldmodel status:', completedLoading , 'Starting up socket');
                 resolve(completedLoading);
+                this.connect();
             });
 
         });
@@ -77,56 +79,6 @@ class generationService {
         return this.scene;
     }
 
-    updateObject(command) {
-        return new Promise(resolve => {
-            this.generateModel(command).then().then((modelExists) => {
-                if (modelExists) {
-                    const object = this.worldObjects[command.parameters.uuid];
-                    if (object == null)
-                        return;
-
-                    object.position.x = command.parameters.x;
-                    object.position.y = command.parameters.y;
-                    object.position.z = command.parameters.z;
-                    resolve(true);
-                }
-            });
-        });
-    }
-
-    /*
-    * Generate model for the first time, only when backend send the create command
-    */
-    generateModel(command) {
-        return new Promise(resolve => {
-            if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0 && !this.loadedObjects.includes(command.parameters.uuid)) {
-                console.log('Adding new model to scene: ', command);
-                this.loadedObjects.push(command.parameters.uuid);
-                if (command.parameters.type === 'robot') {
-                    this.importModelDynamic("balloon",4,0.5, command).then(function(completed) {
-                        console.log("New model added of balloon added, gotten value: ", completed);
-                        resolve(completed);
-                    });
-                }
-                if (command.parameters.type === 'ship') {
-                    this.importModelDynamic("CUPIC_AIRSHIP", 0.20, 0.5, command).then(function(completed) {
-                        console.log("New model added of airship added, gotten value: ", completed);
-                        resolve(completed);
-                    });
-                }
-                if (command.parameters.type === 'crate') {
-                    this.importModelDynamic("crate", 0.20, 0.5, command).then(function(completed) {
-                        console.log("New model added of crate added, gotten value: ", completed);
-                        resolve(completed);
-                    });
-                }
-            } else {
-                console.log(this.worldObjects);
-                resolve(true);
-            }
-        });
-    }
-
     async importModelDynamic(name, size, rotation, command) {
         return new Promise(resolve => {
             console.log('Loading in dynamic model: ', name);
@@ -145,31 +97,39 @@ class generationService {
                     group.add(root);
                     this.scene.add(group);
                     this.worldObjects[command.parameters.uuid] = group;
+                    this.loadedObjects[command.parameters.uuid] = true;
                     resolve(true);
                 });
             });
         });
     }
 
-    async addCrateToRobot(command, group) {
+    async addCrateToRobot(command, hasCrate) {
         return new Promise(resolve => {
-            const objLoader = new OBJLoader2();
-            const mtlLoader = new MTLLoader();
-            mtlLoader.load('../../assets/models/crate.mtl', (mtlParseResult) => {
-                let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
-                objLoader.addMaterials(materials);
-                objLoader.load('../../assets/models/crate.obj', (root) => {
-                    root.scale.set(10, 10, 10);
-                    root.position.y = 2;
-                    root.castShadow = true;
-                    root.receiveShadow = true;
-                    root.rotation.y = Math.PI * 60;
-                    group.add(root);
-                    this.scene.add(group);
-                    this.worldObjects[command.parameters.uuid] = group;
-                    resolve(true);
+            const robot = this.scene.getObjectByName(command.parameters.uuid);
+            const crateExists = robot.getObjectByName(command.parameters.uuid+ "_crate");
+            if (hasCrate && !crateExists) {
+                const robot = this.scene.getObjectByName(command.parameters.uuid);
+                const objLoader = new OBJLoader2();
+                const mtlLoader = new MTLLoader();
+                mtlLoader.load('../../assets/models/crate.mtl', (mtlParseResult) => {
+                    let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
+                    objLoader.addMaterials(materials);
+                    objLoader.load('../../assets/models/crate.obj', (root) => {
+                        root.scale.set(3, 3, 3);
+                        root.position.y = 1;
+                        root.castShadow = true;
+                        root.receiveShadow = true;
+                        root.name = command.parameters.uuid+ "_crate";
+                        root.rotation.y = Math.PI * 60;
+                        robot.add(root);
+                        resolve(true);
+                    });
                 });
-            });
+            } else if (!hasCrate && crateExists)  {
+                robot.remove(crateExists);
+                resolve(true);
+            }
         });
     }
 
@@ -196,52 +156,54 @@ class generationService {
 
     async connect() {
         this.socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connectToSimulation");
-        // Connection opened
+
         this.socket.addEventListener('open', (e) => {
-            this.socket.binaryType = 'arraybuffer'; // important
-            console.log('Connected to server with following event: ', e);
+            console.log('Connected to server: ', e);
         });
 
-        // Do something based on command
         this.socket.onmessage = e => {
             let command = this.parseCommand(e.data);
 
-            //Wanneer het commando is "object_update", dan wordt deze code uitgevoerd. Bekijk ook de servercode om dit goed te begrijpen.
-            if (command.command == "object_update") {
-                //Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
-                //dan wordt het 3D model eerst aangemaakt in de 3D wereld.
-                if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0 && !this.loadedObjects.includes(command.parameters.uuid)) {
-                    this.loadedObjects.push(command.parameters.uuid);
-                    //Wanneer het object een robot is, wordt de code hieronder uitgevoerd.
-                    if (command.parameters.type == "robot") {
+            if (command.command === "object_update") {
+                if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0 && Object.keys(this.loadedObjects).indexOf(command.parameters.uuid) < 0) {
+                    this.loadedObjects[command.parameters.uuid] = false;
+
+                    if (command.parameters.type === "robot") {
                         this.importModelDynamic("balloon",4,0.5, command, "test").then(function(completed) {
                             console.log("New model added of balloon added, gotten value: ", completed);
                         });
                     }
-                    if (command.parameters.type == "ship") {
+
+                    if (command.parameters.type === "ship") {
                         this.importModelDynamic("CUPIC_AIRSHIP", 0.20, 0.5, command).then(function(completed) {
                             console.log("New model added of airship added, gotten value: ", completed);
                         });
                     }
-                    if (command.parameters.type == "crate") {
+
+                    if (command.parameters.type === "crate") {
                         this.importModelDynamic("crate", 0.20, 0.5, command).then(function(completed) {
                             console.log("New model added of airship added, gotten value: ", completed);
                         });
                     }
                 }
-                let object = this.worldObjects[command.parameters.uuid];
+                if (this.loadedObjects[command.parameters.uuid]) {
+                    if (command.parameters.type === "robot") {
+                        if (command.parameters.status === "WORKING") {
+                            this.addCrateToRobot(command, true);
+                        } else {
+                            this.addCrateToRobot(command, false);
+                        }
+                    }
 
-                object.position.x = command.parameters.x;
-                object.position.y = command.parameters.y;
-                object.position.z = command.parameters.z;
+                    let object = this.worldObjects[command.parameters.uuid];
 
-                object.rotation.x = command.parameters.rotationX;
-                object.rotation.y = command.parameters.rotationY;
-                object.rotation.z = command.parameters.rotationZ;
+                    object.position.x = command.parameters.x;
+                    object.position.y = command.parameters.y;
+                    object.position.z = command.parameters.z;
+                }
             }
         };
 
-        // If socket disconnects try to reconnect
         this.socket.onclose = e => {
             console.log('Error connecting. Clearing worldObjects and attempting to reconnect.', e.reason);
             this.clearWorld();

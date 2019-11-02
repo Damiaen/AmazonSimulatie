@@ -89,7 +89,7 @@ class Ship implements Object3D, Updatable {
         for (int i = 0; i < numberOfCrates; i++){
             crates.add(new Crate());
         }
-        return crates;
+        return new ArrayList<>(crates);
     }
 
     public Crate getCrate ()
