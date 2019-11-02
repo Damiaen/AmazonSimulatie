@@ -19,6 +19,7 @@ import com.nhlstenden.amazonsimulatie.views.View;
 public class SimulationController extends Controller
 {
 
+
     public SimulationController(Model model) {
         super(model); //Met dit onderdeel roep je de constructor aan van de superclass (Controller)
     }
@@ -37,7 +38,7 @@ public class SimulationController extends Controller
             if (this.getModel() != null)
                 this.getModel().update();
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
