@@ -52,6 +52,7 @@ public class World implements Model {
         this.ships = new ArrayList<>();
         this.ships.add(new Ship(2));
 
+        this.crates = new ArrayList<>();
         worldLoaded = true;
     }
 
