@@ -47,25 +47,8 @@ class generationService {
         this.scene.add(directionalLight);
 
         // Import alle models die nodig zijn
-        await this.importModel("floating_island",400,15,40,15,0);
-        // await this.importModel("PUSHILIN_windmill",10,85,20,-30,0.5);
-        // await this.importModel("lighthouse",2,-35,10,70,1.5);
-
-        // Tijdelijke models voor de crates, omdat de backend nog niet af is
-        // this.importModel("CUPIC_AIRSHIP",0.20,20,30,-100,0.5);
-        // await this.importModel("crate",10,10,30,12,0.5);
-        // await this.importModel("crate",10,30,30,12,0.5);
-
+        await this.importModel("floating_island",400,0,40,0,0);
         return true;
-
-        // var geometry = new THREE.PlaneGeometry(1000, 1000, 1000);
-        // var material = new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("../../assets/textures/water.jpg"), side: THREE.DoubleSide });
-        // var plane = new THREE.Mesh(geometry, material);
-        // plane.rotation.x = Math.PI / 2.0;
-        // plane.position.x = 15;
-        // plane.position.z = 15;
-        // plane.position.y = -300;
-        // this.scene.add(plane);
     }
 
     setupAudio() {
@@ -120,16 +103,9 @@ class generationService {
                 objLoader.addMaterials(materials);
                 objLoader.load('../../assets/models/' + name + '.obj', (root) => {
                     root.scale.set(size, size, size);
-                    root.position.x = command.parameters.x;
-                    root.position.y = command.parameters.y;
-                    root.position.z = command.parameters.z;
                     root.castShadow = true;
                     root.receiveShadow = true;
                     root.rotation.y = Math.PI * rotation;
-                    // const group = new THREE.Group();
-                    // group.add(root);
-                    // this.scene.add(group);
-                    // this.worldObjects[name] = group;
                     resolve(root);
                 });
             });
@@ -143,10 +119,31 @@ class generationService {
     async updateObject(command) {
         // Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
         // dan wordt het 3D model eerst aangemaakt in de 3D wereld.
+        const modelExists = await this.generateModel(command);
+        console.log(modelExists);
+
+        if (modelExists) {
+            const object = this.worldObjects[command.parameters.uuid];
+
+            if (object == null)
+                return;
+
+            object.position.x = command.parameters.x;
+            object.position.y = command.parameters.y;
+            object.position.z = command.parameters.z;
+        }
+
+        /*
+        * Deze code wordt elke update uitgevoerd. Het update alle positiegegevens van het 3D object.
+        */
+
+    }
+
+    async generateModel(command) {
         if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0) {
             console.log('Adding new model to scene: ', command.parameters.type);
             if (command.parameters.type === 'robot') {
-                await this.createRobot(command);
+                await this.createBalloon(command);
             }
             if (command.parameters.type === 'ship') {
                 await this.createShip(command);
@@ -154,75 +151,9 @@ class generationService {
             if (command.parameters.type === 'crate') {
                 await this.createCrate(command);
             }
+            return true;
         }
-        /*
-        * Deze code wordt elke update uitgevoerd. Het update alle positiegegevens van het 3D object.
-        */
-        const object = this.worldObjects[command.parameters.uuid];
-
-        console.log(command.parameters.uuid);
-
-        // console.log('Updated Object:', object);
-        // console.log('Gotten command:', command);
-        // console.log('List of WorldObjects:', this.worldObjects);
-
-        if (object == null)
-            return;
-
-        // console.log(object.position.x);
-        // console.log(command.parameters.x);
-        // console.log(object.position.z);
-        // console.log(command.parameters.z);
-
-        object.position.x = command.parameters.x;
-        object.position.y = command.parameters.y;
-        object.position.z = command.parameters.z;
-
-        object.rotation.x = command.parameters.rotationX;
-        object.rotation.y = command.parameters.rotationY;
-        object.rotation.z = command.parameters.rotationZ;
-
-    }
-
-    createRobot(command) {
-        const geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
-        const cubeMaterials = [
-            new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/robot_side.png'),
-                side: THREE.DoubleSide
-            }), // LEFT
-            new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/robot_side.png'),
-                side: THREE.DoubleSide
-            }), // RIGHT
-            new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/robot_top.png'),
-                side: THREE.DoubleSide
-            }), // TOP
-            new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/robot_bottom.png'),
-                side: THREE.DoubleSide
-            }), // BOTTOM
-            new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/robot_front.png'),
-                side: THREE.DoubleSide
-            }), // FRONT
-            new THREE.MeshBasicMaterial({
-                map: new THREE.TextureLoader().load('assets/textures/robot_front.png'),
-                side: THREE.DoubleSide
-            }) // BACK
-        ];
-        const robot = new THREE.Mesh(geometry, cubeMaterials);
-        robot.position.z = 32;
-        robot.position.y = 10;
-        robot.position.x = 0;
-        robot.scale.set(8, 8, 8);
-
-        const group = new THREE.Group();
-        group.add(robot);
-        this.scene.add(group);
-        this.worldObjects[command.parameters.uuid] = group;
-
+        return true;
     }
 
     async createBalloon(command) {
@@ -242,10 +173,7 @@ class generationService {
         const group = new THREE.Group();
         group.add(ship);
         this.scene.add(group);
-        console.log(command.parameters.uuid);
         this.worldObjects[command.parameters.uuid] = group;
-        console.log(this.worldObjects[command.parameters.uuid]);
-        console.log(this.worldObjects);
     }
 
     async createCrate(command) {
@@ -259,25 +187,9 @@ class generationService {
     }
 
     async clearWorld() {
-        const _worldObjects = this.worldObjects;
         this.worldObjects = {};
+        let children_to_remove = [];
 
-        // for (let i = 0, l = Object.keys(_worldObjects).length; i < l; i++) {
-        //     console.log(this.worldObjects[i]);
-        // }
-        //
-        const values = Object.values(_worldObjects);
-
-        console.log(this.scene);
-
-        // for (let data of values) {
-        //     console.log(data);
-        //     this.scene.remove(data);
-        // }
-
-        console.log(values);
-
-        var children_to_remove = [];
         this.scene.traverse(function(child){
             if(child.type == "Group"){
                 children_to_remove.push(child);
@@ -289,22 +201,6 @@ class generationService {
                 this.scene.remove(child);
             }
         }
-
-        // Object.keys(_worldObjects).forEach(function(key) {
-        //     let test = _worldObjects[key];
-        //     console.log(key);
-        //     console.log(test);
-        //     console.log(test.uuid);
-        //
-        //     // for (let test of _worldObjects) {
-        //     //     console.log(test);
-        //     //     // var selectedObject = this.scene.getObjectByName(object.name);
-        //     //     // this.scene.remove(object);
-        //     // }
-        // });
-
-
-        // this.worldObjects = {};
     }
 }
 
