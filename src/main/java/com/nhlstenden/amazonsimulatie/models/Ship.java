@@ -25,14 +25,11 @@ class Ship implements Object3D, Updatable {
     private List<Node> Path;
 
     private List<Crate> crates;
-    private int maxCrates = 3;
+    private int maxCrates = 2;
 
     Ship(int numberOfCrates) {
         this.uuid = UUID.randomUUID();
-        crates = new ArrayList<>();
-        for (int i = 0; i < numberOfCrates; i++){
-            crates.add(new Crate());
-        }
+        addCrates(2);
     }
 
     /*
@@ -54,8 +51,14 @@ class Ship implements Object3D, Updatable {
         switch(status) {
             case "START":
                 this.x += 1;
-                if (x == 0) {
-                    this.status = "UNLOADING";
+                if (x == 0)
+                {
+                    if (numberOfCrates() > 0) {
+                        this.status = "UNLOADING";
+                    }
+                    else {
+                        status = "LOADING";
+                    }
                 }
                 break;
             case "UNLOADING":
@@ -68,8 +71,8 @@ class Ship implements Object3D, Updatable {
                 break;
             case "DEPART":
                 this.x += 1;
-                if (x == 280) {
-                    this.x = -280;
+                if (x == 80) {
+                    this.x = -80;
                     this.status = "START";
                 }
                 break;
@@ -80,6 +83,13 @@ class Ship implements Object3D, Updatable {
 
     public int numberOfCrates() {
         return crates.size();
+    }
+    private List<Crate> addCrates (int numberOfCrates) {
+        crates = new ArrayList<>();
+        for (int i = 0; i < numberOfCrates; i++){
+            crates.add(new Crate());
+        }
+        return crates;
     }
 
     public Crate getCrate ()

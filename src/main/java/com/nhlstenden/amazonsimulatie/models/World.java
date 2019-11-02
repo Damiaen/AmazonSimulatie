@@ -68,28 +68,7 @@ public class World implements Model {
     @Override
     public void update() {
 
-        /*
-        1. check if ship is unloading
-        2. go to node 1
-        3. check if ship has crates
-        4. pick up crate
-        5. bring crate to storage node
-        6. check if ship is unloading etc...
-        7. if ship is empty, ship leaves
-        8. robots go idle
-
-        1. check if ship is loading
-        2. check how many crates are needed
-        3. send robots to get amount of crates by
-        4. select amount of robots equal  or less to amount of crates needed if possible
-        5. select the nodes to go to that have a crate
-        6. go back to node 1 (the ship) and drop the crate off
-        7. check if the needed amount of crates is delivered
-        8. if true go idle
-        9. else go back to step 3
-         */
         Ship ship = ships.get(0);
-
         if (ship.getStatus().equals("UNLOADING")) {
             for (Robot robot : robots) {
                 Node currentNode = robot.getCurrentNode();
