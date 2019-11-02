@@ -12,9 +12,9 @@ class Ship implements Object3D, Updatable {
     private UUID uuid;
     private String status = "START";
 
-    private double x = -70;
-    private double y = 16;
-    private double z = -50;
+    private double x = -280;
+    private double y = 30;
+    private double z = -120;
 
     private double rotationX = 0;
     private double rotationY = 0;
@@ -46,7 +46,7 @@ class Ship implements Object3D, Updatable {
         switch(status) {
             case "START":
                 this.x += 1;
-                if (x == 90) {
+                if (x == 0) {
                     this.status = "UNLOADING";
                 }
                 break;
@@ -55,8 +55,8 @@ class Ship implements Object3D, Updatable {
                 break;
             case "DEPART":
                 this.x += 1;
-                if (x == 250) {
-                    this.x = -80;
+                if (x == 280) {
+                    this.x = -280;
                     this.status = "START";
                 }
                 break;
@@ -65,15 +65,11 @@ class Ship implements Object3D, Updatable {
     }
 
     /*
-     * Unload ship based on given command by World Model
+     * Unload ship based on given command by World Model, currently just departs for testing
      */
     private void UnloadShip()
     {
-        int timer = 0;
-        timer++;
-        if (timer > 10) {
-            this.status = "END";
-        }
+//        this.status = "DEPART";
     }
 
     @Override
