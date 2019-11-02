@@ -9,6 +9,7 @@ class generationService {
         this.scene = new THREE.Scene();
         this.socket = new socketService();
         this.worldObjects = {};
+        this.loadedObjects = [];
     }
 
     async setupWorld() {
@@ -36,11 +37,10 @@ class generationService {
             directionalLight.castShadow = true;
             directionalLight.position.set(0.5,0.5,1);
             this.scene.add(directionalLight);
-            this.connect();
 
             this.importWorldModel().then().then((completedLoading) => {
+                console.log('Loading worldmodel status:', completedLoading , 'Starting up socket');
                 resolve(completedLoading);
-                this.connect();
             });
 
         });
@@ -78,9 +78,7 @@ class generationService {
     }
 
     updateObject(command) {
-        console.log(command);
         return new Promise(resolve => {
-            console.log(command);
             this.generateModel(command).then().then((modelExists) => {
                 if (modelExists) {
                     const object = this.worldObjects[command.parameters.uuid];
@@ -101,8 +99,9 @@ class generationService {
     */
     generateModel(command) {
         return new Promise(resolve => {
-            if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0) {
-                console.log('Adding new model to scene: ', command.parameters.type);
+            if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0 && !this.loadedObjects.includes(command.parameters.uuid)) {
+                console.log('Adding new model to scene: ', command);
+                this.loadedObjects.push(command.parameters.uuid);
                 if (command.parameters.type === 'robot') {
                     this.importModelDynamic("balloon",4,0.5, command).then(function(completed) {
                         console.log("New model added of balloon added, gotten value: ", completed);
@@ -117,11 +116,12 @@ class generationService {
                 }
                 if (command.parameters.type === 'crate') {
                     this.importModelDynamic("crate", 0.20, 0.5, command).then(function(completed) {
-                        console.log("New model added of airship added, gotten value: ", completed);
+                        console.log("New model added of crate added, gotten value: ", completed);
                         resolve(completed);
                     });
                 }
             } else {
+                console.log(this.worldObjects);
                 resolve(true);
             }
         });
@@ -140,7 +140,30 @@ class generationService {
                     root.castShadow = true;
                     root.receiveShadow = true;
                     root.rotation.y = Math.PI * rotation;
+                    root.name = command.parameters.uuid;
                     const group = new THREE.Group();
+                    group.add(root);
+                    this.scene.add(group);
+                    this.worldObjects[command.parameters.uuid] = group;
+                    resolve(true);
+                });
+            });
+        });
+    }
+
+    async addCrateToRobot(command, group) {
+        return new Promise(resolve => {
+            const objLoader = new OBJLoader2();
+            const mtlLoader = new MTLLoader();
+            mtlLoader.load('../../assets/models/crate.mtl', (mtlParseResult) => {
+                let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
+                objLoader.addMaterials(materials);
+                objLoader.load('../../assets/models/crate.obj', (root) => {
+                    root.scale.set(10, 10, 10);
+                    root.position.y = 2;
+                    root.castShadow = true;
+                    root.receiveShadow = true;
+                    root.rotation.y = Math.PI * 60;
                     group.add(root);
                     this.scene.add(group);
                     this.worldObjects[command.parameters.uuid] = group;
@@ -155,6 +178,7 @@ class generationService {
     */
     async clearWorld() {
         this.worldObjects = {};
+        this.loadedObjects = [];
         let children_to_remove = [];
 
         this.scene.traverse(function(child){
@@ -186,10 +210,11 @@ class generationService {
             if (command.command == "object_update") {
                 //Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
                 //dan wordt het 3D model eerst aangemaakt in de 3D wereld.
-                if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0) {
+                if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0 && !this.loadedObjects.includes(command.parameters.uuid)) {
+                    this.loadedObjects.push(command.parameters.uuid);
                     //Wanneer het object een robot is, wordt de code hieronder uitgevoerd.
                     if (command.parameters.type == "robot") {
-                        this.importModelDynamic("balloon",4,0.5, command).then(function(completed) {
+                        this.importModelDynamic("balloon",4,0.5, command, "test").then(function(completed) {
                             console.log("New model added of balloon added, gotten value: ", completed);
                         });
                     }

@@ -42,6 +42,7 @@ public class World implements Model {
         this.robots = new ArrayList<>();
         Dijkstra dijkstra = new Dijkstra(graph);
         this.robots.add(new Robot(dijkstra,graph.getNodes().get(1)));
+        this.robots.add(new Robot(dijkstra,graph.getNodes().get(1)));
 
         this.ships = new ArrayList<>();
         this.ships.add(new Ship());
