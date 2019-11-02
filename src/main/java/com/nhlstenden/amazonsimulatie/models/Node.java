@@ -15,6 +15,7 @@ public class Node {
 
     private boolean canHaveCrate;
     private boolean hasCrate;
+    private boolean isRecievingCrate;
 
     private Crate crate;
 
@@ -23,6 +24,13 @@ public class Node {
         this.x = x;
         this.z = z;
         this.canHaveCrate = canHaveCrate;
+    }
+
+    public boolean getIsRecievingCrate() {
+        return isRecievingCrate;
+    }
+    public void setIsRecievingCrate(boolean b) {
+        isRecievingCrate = b;
     }
 
     public boolean getIsVisited() {

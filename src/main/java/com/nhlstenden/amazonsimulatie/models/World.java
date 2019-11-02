@@ -50,9 +50,10 @@ public class World implements Model {
         this.robots.add(new Robot(dijkstra,graph.getNodes().get(12)));
 
         this.ships = new ArrayList<>();
-        this.ships.add(new Ship(2));
+        this.ships.add(new Ship(7));
 
         this.crates = new ArrayList<>();
+        crates = ships.get(0).getCrates();
         worldLoaded = true;
     }
 
@@ -68,6 +69,36 @@ public class World implements Model {
     @Override
     public void update() {
 
+        if (!worldLoaded) return;
+        simLoop();
+
+        for (Object3D object : this.robots)
+        {
+            if (object instanceof Updatable) {
+                if (((Updatable) object).update()) {
+                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
+                }
+            }
+        }
+
+        for (Object3D object : this.ships) {
+            if (object instanceof Updatable) {
+                if (((Updatable) object).update()) {
+                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
+                }
+            }
+        }
+
+        for (Object3D object : this.crates) {
+            if (object instanceof Updatable) {
+                if (((Updatable) object).update()) {
+                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
+                }
+            }
+        }
+    }
+
+    public void simLoop(){
         Ship ship = ships.get(0);
         if (ship.getStatus().equals("UNLOADING")) {
             for (Robot robot : robots) {
@@ -79,8 +110,9 @@ public class World implements Model {
                             if (currentNode == dockNode) {
                                 robot.setCrate(ship.getCrate());
                                 for (Node node : nodes) {
-                                    if (node.getCanHaveCrate() && !node.getHasCrate()) {
+                                    if (node.getCanHaveCrate() && !node.getHasCrate() && !node.getIsRecievingCrate()) {
                                         robot.setTarget(node);
+                                        node.setIsRecievingCrate(true);
                                         break;
                                     }
                                 }
@@ -93,6 +125,7 @@ public class World implements Model {
                     } else {
                         if (currentNode == robot.getTarget() && currentNode.getCanHaveCrate()) {
                             currentNode.setHasCrate(true);
+                            currentNode.setIsRecievingCrate(false);
                             currentNode.setCrate(robot.getCrate());
                             robot.setCrate(null);
                         }
@@ -130,37 +163,6 @@ public class World implements Model {
                         }
                     }
 
-                }
-            }
-        }
-
-
-
-
-
-
-        if (!worldLoaded) return;
-        for (Object3D object : this.robots)
-        {
-            if (object instanceof Updatable) {
-                if (((Updatable) object).update()) {
-                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
-                }
-            }
-        }
-
-        for (Object3D object : this.ships) {
-            if (object instanceof Updatable) {
-                if (((Updatable) object).update()) {
-                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
-                }
-            }
-        }
-
-        for (Object3D object : this.crates) {
-            if (object instanceof Updatable) {
-                if (((Updatable) object).update()) {
-                    pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
                 }
             }
         }
