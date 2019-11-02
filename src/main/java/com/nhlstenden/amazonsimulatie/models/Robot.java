@@ -82,16 +82,16 @@ class Robot implements Object3D, Updatable {
         {
             if (this.x != target.getX()) {
                 if (this.x > target.getX()) {
-                    this.x -= 0.25;
+                    this.x -= 1;
                 } else {
-                    this.x += 0.25;
+                    this.x += 1;
                 }
             }
             else {
                 if (this.z > target.getZ()) {
-                    this.z -= 0.25;
+                    this.z -= 1;
                 } else {
-                    this.z += 0.25;
+                    this.z += 1;
                 }
             }
         }

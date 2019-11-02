@@ -7,6 +7,9 @@ let cameraControls;
 let _generationService;
 let _socketService;
 
+var socket;
+
+
 async function init() {
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1500);
     cameraControls = new THREE.OrbitControls(camera);
@@ -22,12 +25,11 @@ async function init() {
 
     window.addEventListener('resize', onWindowResize, false);
     _generationService = new generationService();
-    await _generationService.setupWorld();
-
-    _socketService = new socketService(_generationService);
-    await _socketService.connect();
-
-    frameStep();
+    await _generationService.setupWorld().then(function (completedLoading) {
+        if (completedLoading) {
+            frameStep();
+        }
+    });
 }
 
 function onWindowResize() {

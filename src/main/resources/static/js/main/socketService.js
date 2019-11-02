@@ -6,7 +6,6 @@ class socketService {
 
     async connect() {
         this.socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/connectToSimulation");
-
         // Connection opened
         this.socket.addEventListener('open', (e) => {
             this.socket.binaryType = 'arraybuffer'; // important
@@ -14,16 +13,10 @@ class socketService {
         });
 
         // Do something based on command
-        this.socket.onmessage = e => {
+        this.socket.onmessage = async e => {
             let command = this.parseCommand(e.data);
             if (command.command === 'object_update') {
-                this._worldObjectManger.updateObject(command);
-            }
-            if (command.command === 'object_generate') {
-                this._worldObjectManger.generateObject(command);
-            }
-            if (command.command === 'clear_world') {
-                this._worldObjectManger.clearWorld();
+                await this._worldObjectManger.updateObject(command);
             }
         };
 
@@ -33,7 +26,7 @@ class socketService {
             this._worldObjectManger.clearWorld();
             setTimeout(() => {
                 this.connect();
-            }, 2000);
+            }, 1000);
         };
     };
 
