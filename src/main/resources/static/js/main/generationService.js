@@ -10,6 +10,7 @@ class generationService {
         this.socket = new socketService();
         this.worldObjects = {};
         this.loadedObjects = [];
+        this.loadedCrates = [];
     }
 
     async setupWorld() {
@@ -38,7 +39,7 @@ class generationService {
             directionalLight.position.set(0.5,0.5,1);
             this.scene.add(directionalLight);
 
-            this.importWorldModel().then().then((completedLoading) => {
+            this.importWorldModel().then((completedLoading) => {
                 console.log('Loading worldmodel status:', completedLoading , 'Starting up socket');
                 resolve(completedLoading);
                 this.connect();
@@ -103,25 +104,32 @@ class generationService {
         });
     }
 
-    async addCrateToRobot(command, group) {
+    async addCrateToRobot(command, hasCrate) {
         return new Promise(resolve => {
-            const objLoader = new OBJLoader2();
-            const mtlLoader = new MTLLoader();
-            mtlLoader.load('../../assets/models/crate.mtl', (mtlParseResult) => {
-                let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
-                objLoader.addMaterials(materials);
-                objLoader.load('../../assets/models/crate.obj', (root) => {
-                    root.scale.set(10, 10, 10);
-                    root.position.y = 2;
-                    root.castShadow = true;
-                    root.receiveShadow = true;
-                    root.rotation.y = Math.PI * 60;
-                    group.add(root);
-                    this.scene.add(group);
-                    this.worldObjects[command.parameters.uuid] = group;
-                    resolve(true);
+            const robot = this.scene.getObjectByName(command.parameters.uuid);
+            const crateExists = robot.getObjectByName(command.parameters.uuid+ "_crate");
+            if (hasCrate && !crateExists) {
+                const robot = this.scene.getObjectByName(command.parameters.uuid);
+                const objLoader = new OBJLoader2();
+                const mtlLoader = new MTLLoader();
+                mtlLoader.load('../../assets/models/crate.mtl', (mtlParseResult) => {
+                    let materials = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
+                    objLoader.addMaterials(materials);
+                    objLoader.load('../../assets/models/crate.obj', (root) => {
+                        root.scale.set(3, 3, 3);
+                        root.position.y = 1;
+                        root.castShadow = true;
+                        root.receiveShadow = true;
+                        root.name = command.parameters.uuid+ "_crate";
+                        root.rotation.y = Math.PI * 60;
+                        robot.add(root);
+                        resolve(true);
+                    });
                 });
-            });
+            } else if (!hasCrate && crateExists)  {
+                robot.remove(crateExists);
+                resolve(true);
+            }
         });
     }
 
@@ -179,6 +187,14 @@ class generationService {
                     }
                 }
                 if (this.loadedObjects[command.parameters.uuid]) {
+                    if (command.parameters.type === "robot") {
+                        if (command.parameters.status === "WORKING") {
+                            this.addCrateToRobot(command, true);
+                        } else {
+                            this.addCrateToRobot(command, false);
+                        }
+                    }
+
                     let object = this.worldObjects[command.parameters.uuid];
 
                     object.position.x = command.parameters.x;
