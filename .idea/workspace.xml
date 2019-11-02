@@ -28,6 +28,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -47,6 +48,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
@@ -108,6 +110,12 @@
       <workItem from="1572255904772" duration="12407000" />
       <workItem from="1572269465569" duration="245000" />
       <workItem from="1572430913029" duration="5872000" />
+      <workItem from="1572457333014" duration="661000" />
+      <workItem from="1572512697093" duration="17507000" />
+      <workItem from="1572599647905" duration="27113000" />
+      <workItem from="1572635927698" duration="526000" />
+      <workItem from="1572644198185" duration="2484000" />
+      <workItem from="1572693450026" duration="5850000" />
     </task>
     <task id="LOCAL-00001" summary="Updated island model so it looks like design.">
       <created>1571661154910</created>

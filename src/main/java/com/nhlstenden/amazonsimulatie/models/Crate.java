@@ -8,7 +8,7 @@ import java.util.UUID;
  * 3D object is. Ook implementeerd deze class de interface Updatable. Dit is omdat
  * een robot geupdate kan worden binnen de 3D wereld om zich zo voort te bewegen.
  */
-class Crate implements Object3D, Updatable {
+public class Crate implements Object3D, Updatable {
     private UUID uuid;
     private String status = "PICKUP";
 
@@ -23,12 +23,14 @@ class Crate implements Object3D, Updatable {
     private Node Target;
     private List<Node> Path;
 
+    private boolean isStored;
+
     /*
      * Status of the ship (Offloading packages etc.)
      */
     private Integer packageValue = 10;
 
-    private Crate() {
+    Crate() {
         this.uuid = UUID.randomUUID();
     }
 
@@ -104,5 +106,13 @@ class Crate implements Object3D, Updatable {
     @Override
     public double getRotationZ() {
         return this.rotationZ;
+    }
+
+    public void setIsStored (boolean b) {
+        isStored = b;
+    }
+
+    public boolean getIsStored(){
+        return isStored;
     }
 }

@@ -1,5 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +24,15 @@ class Ship implements Object3D, Updatable {
     private Node Target;
     private List<Node> Path;
 
-    public Ship() {
+    private List<Crate> crates;
+    private int maxCrates = 3;
+
+    Ship(int numberOfCrates) {
         this.uuid = UUID.randomUUID();
+        crates = new ArrayList<>();
+        for (int i = 0; i < numberOfCrates; i++){
+            crates.add(new Crate());
+        }
     }
 
     /*
@@ -51,7 +59,10 @@ class Ship implements Object3D, Updatable {
                 }
                 break;
             case "UNLOADING":
-                UnloadShip();
+                if (numberOfCrates() == 0){status = "DEPART";}
+                break;
+            case "LOADING":
+                if (numberOfCrates() == maxCrates){status = "DEPART";}
                 break;
             case "DEPART":
                 this.x += 1;
@@ -64,12 +75,24 @@ class Ship implements Object3D, Updatable {
         return true;
     }
 
-    /*
-     * Unload ship based on given command by World Model, currently just departs for testing
-     */
-    private void UnloadShip()
+
+    public int numberOfCrates() {
+        return crates.size();
+    }
+
+    public Crate getCrate ()
     {
-//        this.status = "DEPART";
+        Crate crate = crates.get(0);
+        crates.remove(0);
+        return crate;
+    }
+    public void addCrate (Crate crate)
+    {
+        crates.add(crate);
+    }
+
+    public int getMaxCrates() {
+        return maxCrates;
     }
 
     @Override

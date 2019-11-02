@@ -12,15 +12,11 @@ public class GraphGenerator
 {
     private Dijkstra dijkstra;
 
-    private List<Node> nodes = new ArrayList<>();
-    private List<Edge> edges = new ArrayList<>();
-
     public Graph Setup()
     {
-        nodes = generateNodes();
-        edges = generateEdges(nodes);
-        Graph graph = new Graph(nodes,edges);
-        return graph;
+        List<Node> nodes = generateNodes();
+        List<Edge> edges = generateEdges(nodes);
+        return new Graph(nodes, edges);
     }
 
     private List<Node> generateNodes()

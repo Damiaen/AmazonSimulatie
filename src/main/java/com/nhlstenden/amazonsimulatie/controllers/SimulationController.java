@@ -36,7 +36,6 @@ public class SimulationController extends Controller
         while (true) {
             if (this.getModel() != null)
                 this.getModel().update();
-
             try {
                 Thread.sleep(100);
 

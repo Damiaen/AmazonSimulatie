@@ -2,6 +2,7 @@ package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /*
@@ -11,7 +12,7 @@ import java.util.UUID;
  */
 class Robot implements Object3D, Updatable {
     private UUID uuid;
-    private String status = "WORKING";
+    private String status = "IDLE";
 
     private double x = 0;
     private double y = 10;
@@ -23,18 +24,22 @@ class Robot implements Object3D, Updatable {
 
     private Node target;
     private List<Node> path;
-    private Crate Crate;
+    private Crate crate;
 
     private Dijkstra dijkstra;
+    private Node startNode;
     private Node currentNode;
+
+    boolean isRunning;
+
 
     public Robot(Dijkstra dijkstra, Node node) {
         this.uuid = UUID.randomUUID();
         this.dijkstra = dijkstra;
         this.path = new ArrayList<>();
-        this.currentNode = node;
-        this.x = currentNode.getX();
-        this.z = currentNode.getZ();
+        this.startNode = node;
+        this.x = startNode.getX();
+        this.z = startNode.getZ();
     }
 
     /*
@@ -56,23 +61,30 @@ class Robot implements Object3D, Updatable {
         switch(status) {
             case "IDLE":
                 // Standings still at base location
+                if (path.size() > 0) {
+                    this.status = "WORKING";
+                }
                 break;
             case "WORKING":
-                if (path.size() > 0)
-                    updatePathFinding();
+
+                if (path.size() == 0) {
+                    status = "IDLE";
+                    break;
+                }
+                updatePathFinding();
                 // Pathfinding with crate
                 break;
             case "RETURNING":
                 // Returning to base position code
+                setTarget(startNode);
                 break;
         }
         return true;
     }
 
     private void updatePathFinding() {
-
         target = path.get(0);
-
+        currentNode = target;
         if (this.x == target.getX() && this.z == target.getZ())
         {
             currentNode = path.get(0);
@@ -95,14 +107,38 @@ class Robot implements Object3D, Updatable {
                 }
             }
         }
-        System.out.println(x + " " + z);
     }
 
     public void setTarget(Node target)
     {
-        path = dijkstra.DijkstraAlgoritm(currentNode,target);
-        this.status = "WORKING";
+        if (currentNode == target || startNode == target){
+            return;
+        }
+        if (currentNode != null) {
+            path = dijkstra.DijkstraAlgoritm(currentNode, target);
+        }
+        else {
+            path = dijkstra.DijkstraAlgoritm(startNode, target);
+        }
     }
+
+    public Node getCurrentNode(){
+        return currentNode;
+    }
+
+    public Node getTarget() { return target; }
+
+    public boolean getHasCrate() {
+        if (crate != null){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public Crate getCrate() { return crate; }
+
+    public void setCrate(Crate crate) { this.crate = crate; }
 
     @Override
     public String getUUID() {
@@ -154,4 +190,5 @@ class Robot implements Object3D, Updatable {
     public double getRotationZ() {
         return this.rotationZ;
     }
+
 }

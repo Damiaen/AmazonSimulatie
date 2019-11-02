@@ -1,5 +1,7 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.List;
+
 public class Node {
 
     private String name;
@@ -11,11 +13,16 @@ public class Node {
     private Node previous;
     private boolean isVisited;
 
+    private boolean canHaveCrate;
+    private boolean hasCrate;
 
-    public Node(String name,double x, double z) {
+    private Crate crate;
+
+    public Node(String name,double x, double z, boolean canHaveCrate) {
         this.name = name;
         this.x = x;
         this.z = z;
+        this.canHaveCrate = canHaveCrate;
     }
 
     public boolean getIsVisited() {
@@ -47,4 +54,16 @@ public class Node {
     public String getName() {
         return this.name;
     }
+
+    public boolean getHasCrate () {
+        return hasCrate;
+    }
+    public void setHasCrate(boolean b) {
+        hasCrate = b;
+    }
+    public boolean getCanHaveCrate () {
+        return canHaveCrate;
+    }
+    public Crate getCrate() {return crate;}
+    public void setCrate(Crate crate) { this.crate = crate;}
 }
