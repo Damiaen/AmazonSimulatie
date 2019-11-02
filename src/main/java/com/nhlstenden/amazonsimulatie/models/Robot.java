@@ -40,6 +40,7 @@ class Robot implements Object3D, Updatable {
         this.startNode = node;
         this.x = startNode.getX();
         this.z = startNode.getZ();
+        this.currentNode = startNode;
     }
 
     /*
@@ -62,11 +63,10 @@ class Robot implements Object3D, Updatable {
             case "IDLE":
                 // Standings still at base location
                 if (path.size() > 0) {
-                    this.status = "WORKING";
+                    status = "WORKING";
                 }
                 break;
             case "WORKING":
-
                 if (path.size() == 0) {
                     status = "IDLE";
                     break;
@@ -82,9 +82,9 @@ class Robot implements Object3D, Updatable {
         return true;
     }
 
-    private void updatePathFinding() {
+    private void updatePathFinding()
+    {
         target = path.get(0);
-        currentNode = target;
         if (this.x == target.getX() && this.z == target.getZ())
         {
             currentNode = path.get(0);
@@ -111,14 +111,11 @@ class Robot implements Object3D, Updatable {
 
     public void setTarget(Node target)
     {
-        if (currentNode == target || startNode == target){
-            return;
-        }
-        if (currentNode != null) {
-            path = dijkstra.DijkstraAlgoritm(currentNode, target);
-        }
-        else {
-            path = dijkstra.DijkstraAlgoritm(startNode, target);
+        if (currentNode != target){
+            if (currentNode != null)
+            {
+                this.path = dijkstra.DijkstraAlgoritm(currentNode, target);
+            }
         }
     }
 
@@ -159,6 +156,10 @@ class Robot implements Object3D, Updatable {
     @Override
     public String getStatus() {
         return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

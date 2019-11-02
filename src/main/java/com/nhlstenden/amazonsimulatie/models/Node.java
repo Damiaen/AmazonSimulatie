@@ -42,7 +42,7 @@ public class Node {
 
     public void setPrevious(Node node){ this.previous = node; }
 
-    public Node getPrevious(){ return previous; }
+    public Node getPrevious(){ return this.previous; }
 
     public double getX() {
         return this.x;

@@ -46,8 +46,8 @@ public class World implements Model {
         dockNode = nodes.get(1);
         this.robots = new ArrayList<>();
         Dijkstra dijkstra = new Dijkstra(this.graph);
-        this.robots.add(new Robot(dijkstra,graph.getNodes().get(1)));
-        this.robots.add(new Robot(dijkstra,graph.getNodes().get(1)));
+        this.robots.add(new Robot(dijkstra,graph.getNodes().get(7)));
+        this.robots.add(new Robot(dijkstra,graph.getNodes().get(12)));
 
         this.ships = new ArrayList<>();
         this.ships.add(new Ship(2));
@@ -99,29 +99,29 @@ public class World implements Model {
                         if (ship.numberOfCrates() > 0) {
                             if (currentNode == dockNode) {
                                 robot.setCrate(ship.getCrate());
+                                for (Node node : nodes) {
+                                    if (node.getCanHaveCrate() && !node.getHasCrate()) {
+                                        robot.setTarget(node);
+                                        break;
+                                    }
+                                }
                             } else {
-                                robot.setTarget(dockNode);
+                                if (robot.getTarget() != dockNode) {
+                                    robot.setTarget(dockNode);
+                                }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         if (currentNode == robot.getTarget() && currentNode.getCanHaveCrate()) {
                             currentNode.setHasCrate(true);
                             currentNode.setCrate(robot.getCrate());
                             robot.setCrate(null);
                         }
-                        else {
-                            for (Node node : nodes) {
-                                if (node.getCanHaveCrate() && !node.getHasCrate()) {
-                                    robot.setTarget(node);
-                                    break;
-                                }
-                            }
-                        }
                     }
                 }
             }
         }
+
         if (ship.getStatus().equals("LOADING")) {
             for (Robot robot : robots) {
                 Node currentNode = robot.getCurrentNode();
@@ -132,6 +132,12 @@ public class World implements Model {
                             if (currentNode == dockNode) {
                                 ship.addCrate(robot.getCrate());
                                 robot.setCrate(null);
+                                for (Node node : nodes) {
+                                    if (node.getCanHaveCrate() && node.getHasCrate()) {
+                                        robot.setTarget(node);
+                                        break;
+                                    }
+                                }
                             } else {
                                 robot.setTarget(dockNode);
                             }
@@ -142,14 +148,6 @@ public class World implements Model {
                             currentNode.setHasCrate(true);
                             currentNode.setCrate(robot.getCrate());
                             robot.setCrate(null);
-                        }
-                        else {
-                            for (Node node : nodes) {
-                                if (node.getCanHaveCrate() && node.getHasCrate()) {
-                                    robot.setTarget(node);
-                                    break;
-                                }
-                            }
                         }
                     }
 

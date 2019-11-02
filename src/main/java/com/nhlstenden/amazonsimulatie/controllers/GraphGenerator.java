@@ -25,7 +25,7 @@ public class GraphGenerator
 
         //1st row
         nodes.add(new Node("Node0",-42,-72, false));
-        nodes.add(new Node("Node1",8,-72, true));
+        nodes.add(new Node("Node1",8,-72, false));
         nodes.add(new Node("Node2",55,-72,false));
         //2nd row
         nodes.add(new Node("Node3",-42,-40,false));
@@ -67,54 +67,87 @@ public class GraphGenerator
 
         //1st row
         edges.add(new Edge(nodes.get(0),nodes.get(1),2));
+        edges.add(new Edge(nodes.get(1),nodes.get(0),2));
         edges.add(new Edge(nodes.get(1),nodes.get(2),2));
+        edges.add(new Edge(nodes.get(2),nodes.get(1),2));
 
         //1st and 3rd column on 1st row
         edges.add(new Edge(nodes.get(0),nodes.get(3),1));
+        edges.add(new Edge(nodes.get(3),nodes.get(0),1));
         edges.add(new Edge(nodes.get(2),nodes.get(5),1));
+        edges.add(new Edge(nodes.get(5),nodes.get(2),1));
 
         //2nd row
         edges.add(new Edge(nodes.get(3),nodes.get(4),2));
+        edges.add(new Edge(nodes.get(4),nodes.get(3),2));
         edges.add(new Edge(nodes.get(4),nodes.get(5),2));
+        edges.add(new Edge(nodes.get(5),nodes.get(4),2));
 
         //1st, 2nd and 3rd column on 2nd row
         edges.add(new Edge(nodes.get(3),nodes.get(6),1));
+        edges.add(new Edge(nodes.get(6),nodes.get(3),1));
         edges.add(new Edge(nodes.get(4),nodes.get(9),1));
+        edges.add(new Edge(nodes.get(9),nodes.get(4),1));
         edges.add(new Edge(nodes.get(5),nodes.get(12),1));
+        edges.add(new Edge(nodes.get(12),nodes.get(5),1));
 
         //3rd row
         edges.add(new Edge(nodes.get(6),nodes.get(7),1));
+        edges.add(new Edge(nodes.get(7),nodes.get(6),1));
         edges.add(new Edge(nodes.get(7),nodes.get(8),1));
+        edges.add(new Edge(nodes.get(8),nodes.get(7),1));
         edges.add(new Edge(nodes.get(8),nodes.get(9),1));
+        edges.add(new Edge(nodes.get(9),nodes.get(8),1));
         edges.add(new Edge(nodes.get(9),nodes.get(10),1));
+        edges.add(new Edge(nodes.get(10),nodes.get(9),1));
         edges.add(new Edge(nodes.get(10),nodes.get(11),1));
+        edges.add(new Edge(nodes.get(11),nodes.get(10),1));
         edges.add(new Edge(nodes.get(11),nodes.get(12),1));
+        edges.add(new Edge(nodes.get(12),nodes.get(11),1));
 
         //1st,2nd and 3rd columns on 3nd row
         edges.add(new Edge(nodes.get(6),nodes.get(13),1));
+        edges.add(new Edge(nodes.get(13),nodes.get(6),1));
         edges.add(new Edge(nodes.get(9),nodes.get(16),1));
+        edges.add(new Edge(nodes.get(16),nodes.get(9),1));
         edges.add(new Edge(nodes.get(12),nodes.get(19),1));
+        edges.add(new Edge(nodes.get(19),nodes.get(12),1));
 
         //4th row
         edges.add(new Edge(nodes.get(13),nodes.get(14),1));
+        edges.add(new Edge(nodes.get(14),nodes.get(13),1));
         edges.add(new Edge(nodes.get(14),nodes.get(15),1));
+        edges.add(new Edge(nodes.get(15),nodes.get(14),1));
         edges.add(new Edge(nodes.get(15),nodes.get(16),1));
+        edges.add(new Edge(nodes.get(16),nodes.get(15),1));
         edges.add(new Edge(nodes.get(16),nodes.get(17),1));
+        edges.add(new Edge(nodes.get(17),nodes.get(16),1));
         edges.add(new Edge(nodes.get(17),nodes.get(18),1));
+        edges.add(new Edge(nodes.get(18),nodes.get(17),1));
         edges.add(new Edge(nodes.get(18),nodes.get(19),1));
+        edges.add(new Edge(nodes.get(19),nodes.get(18),1));
 
         //1st,2nd,3rd columns on 4rd row
         edges.add(new Edge(nodes.get(13),nodes.get(20),1));
+        edges.add(new Edge(nodes.get(20),nodes.get(13),1));
         edges.add(new Edge(nodes.get(16),nodes.get(23),1));
+        edges.add(new Edge(nodes.get(23),nodes.get(16),1));
         edges.add(new Edge(nodes.get(19),nodes.get(26),1));
+        edges.add(new Edge(nodes.get(26),nodes.get(19),1));
 
         //5th row
         edges.add(new Edge(nodes.get(20),nodes.get(21),1));
+        edges.add(new Edge(nodes.get(21),nodes.get(20),1));
         edges.add(new Edge(nodes.get(21),nodes.get(22),1));
+        edges.add(new Edge(nodes.get(22),nodes.get(21),1));
         edges.add(new Edge(nodes.get(22),nodes.get(23),1));
+        edges.add(new Edge(nodes.get(23),nodes.get(22),1));
         edges.add(new Edge(nodes.get(23),nodes.get(24),1));
+        edges.add(new Edge(nodes.get(24),nodes.get(23),1));
         edges.add(new Edge(nodes.get(24),nodes.get(25),1));
+        edges.add(new Edge(nodes.get(25),nodes.get(24),1));
         edges.add(new Edge(nodes.get(25),nodes.get(26),1));
+        edges.add(new Edge(nodes.get(26),nodes.get(25),1));
 
         return edges;
     }

@@ -207,23 +207,23 @@ class generationService {
             let command = this.parseCommand(e.data);
 
             //Wanneer het commando is "object_update", dan wordt deze code uitgevoerd. Bekijk ook de servercode om dit goed te begrijpen.
-            if (command.command == "object_update") {
+            if (command.command === "object_update") {
                 //Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
                 //dan wordt het 3D model eerst aangemaakt in de 3D wereld.
                 if (Object.keys(this.worldObjects).indexOf(command.parameters.uuid) < 0 && !this.loadedObjects.includes(command.parameters.uuid)) {
                     this.loadedObjects.push(command.parameters.uuid);
                     //Wanneer het object een robot is, wordt de code hieronder uitgevoerd.
-                    if (command.parameters.type == "robot") {
+                    if (command.parameters.type === "robot") {
                         this.importModelDynamic("balloon",4,0.5, command, "test").then(function(completed) {
                             console.log("New model added of balloon added, gotten value: ", completed);
                         });
                     }
-                    if (command.parameters.type == "ship") {
+                    if (command.parameters.type === "ship") {
                         this.importModelDynamic("CUPIC_AIRSHIP", 0.20, 0.5, command).then(function(completed) {
                             console.log("New model added of airship added, gotten value: ", completed);
                         });
                     }
-                    if (command.parameters.type == "crate") {
+                    if (command.parameters.type === "crate") {
                         this.importModelDynamic("crate", 0.20, 0.5, command).then(function(completed) {
                             console.log("New model added of airship added, gotten value: ", completed);
                         });

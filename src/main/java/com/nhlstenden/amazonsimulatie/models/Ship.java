@@ -13,7 +13,7 @@ class Ship implements Object3D, Updatable {
     private UUID uuid;
     private String status = "START";
 
-    private double x = -280;
+    private double x = -5;
     private double y = 30;
     private double z = -120;
 
@@ -59,7 +59,9 @@ class Ship implements Object3D, Updatable {
                 }
                 break;
             case "UNLOADING":
-                if (numberOfCrates() == 0){status = "DEPART";}
+                if (numberOfCrates() == 0) {
+                    status = "DEPART";
+                }
                 break;
             case "LOADING":
                 if (numberOfCrates() == maxCrates){status = "DEPART";}

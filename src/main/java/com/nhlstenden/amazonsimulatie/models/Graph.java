@@ -13,10 +13,11 @@ public class Graph {
     }
 
     public List<Edge> getEdges() {
-        return edges;
+        return this.edges;
     }
 
-    public List<Node> getNodes() {
-        return nodes;
+    public List<Node> getNodes()
+    {
+        return new ArrayList<>(nodes);
     }
 }

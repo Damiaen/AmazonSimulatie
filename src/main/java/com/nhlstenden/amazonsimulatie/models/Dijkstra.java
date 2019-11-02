@@ -8,25 +8,21 @@ public class Dijkstra {
     /*
      * This implementation of Dijkstra's algorithm updates all nodes in a graph with their shortest distance/path to a given node
      */
-
-    private List<Edge> edges;
-    private List<Node> nodes;
+    private final Graph graph;
 
     public Dijkstra(Graph graph) {
-        this.edges = graph.getEdges();
-        this.nodes = graph.getNodes();
+        this.graph = graph;
     }
 
     public List<Node> DijkstraAlgoritm(Node startNode, Node eindNode) {
 
-        List<Node> nodeList = this.nodes;
+        List<Node> nodeList = graph.getNodes();
 
         for (Node node : nodeList) {
             node.setDistance(1000000);
             node.setIsVisited(false);
         }
         startNode.setDistance(0);
-
         while (nodeList.size() > 0) {
             Node nextNode = startNode;
             double min = 10000000;
@@ -38,8 +34,9 @@ public class Dijkstra {
             }
 
             List<Edge> nodeEdges = new ArrayList<>();
-            for (Edge e : this.edges) {
-                if (e.getNode1() == nextNode || e.getNode2() == nextNode) {
+            for (Edge e : this.graph.getEdges()) {
+                if (e.getNode1() == nextNode)
+                {
                     nodeEdges.add(e);
                 }
             }
@@ -47,12 +44,7 @@ public class Dijkstra {
 
             for (Edge edge : nodeEdges) {
                 int a = edge.getWeight() + nextNode.getDistance();
-                Node n;
-                if (nextNode != edge.getNode1()) {
-                    n = edge.getNode1();
-                } else {
-                    n = edge.getNode2();
-                }
+                Node n = edge.getNode2();
                 if (a < n.getDistance()) {
                     n.setDistance(a);
                     n.setPrevious(nextNode);
@@ -78,7 +70,7 @@ public class Dijkstra {
     }
 
     public List<Node> getNodes(){
-        return nodes;
+        return graph.getNodes();
     }
 
 }

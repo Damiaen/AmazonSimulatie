@@ -37,7 +37,7 @@ public class SimulationController extends Controller
             if (this.getModel() != null)
                 this.getModel().update();
             try {
-                Thread.sleep(100);
+                Thread.sleep(200);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
