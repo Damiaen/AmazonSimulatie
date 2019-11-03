@@ -1,14 +1,9 @@
-import {socketService} from './socketService.js';
 import {generationService} from "./generationService.js";
 
 let camera, renderer;
 let cameraControls;
 
 let _generationService;
-let _socketService;
-
-var socket;
-
 
 async function init() {
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1500);
@@ -28,20 +23,7 @@ async function init() {
     await _generationService.setupWorld();
     console.log('Completed setting up world, opening socket connection');
 
-    // _socketService = new socketService(_generationService);
-    // await _socketService.connect();
-
     frameStep();
-
-    // window.addEventListener('resize', onWindowResize, false);
-    // _generationService = new generationService();
-    // await _generationService.setupWorld().then(function (completedLoading) {
-    //     if (completedLoading) {
-    //         frameStep();
-    //     }
-    // });
-
-    // frameStep();
 }
 
 function onWindowResize() {

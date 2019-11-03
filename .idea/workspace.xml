@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd50a7f1-c99c-4fdb-a215-4f5aa17e74ce" name="Default Changelist" comment="">
+    <list default="true" id="cd50a7f1-c99c-4fdb-a215-4f5aa17e74ce" name="Default Changelist" comment="Robots now have crates">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Robot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Ship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Object3D.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Object3D.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/ProxyObject3D.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/ProxyObject3D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/main/_old.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/main/generationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/main/generationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/main/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/main/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/main/socketService.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Robot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/Robot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/World.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/World.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/WorldTile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/models/WorldTile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/views/DefaultWebSocketView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nhlstenden/amazonsimulatie/views/DefaultWebSocketView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/_old.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/generationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/main/generationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/socketService.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/main/socketService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/main/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/main/socketService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/nhlstenden/amazonsimulatie/tests/DijkstraAlgorithmTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/nhlstenden/amazonsimulatie/tests/DijkstraAlgorithmTests.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +54,7 @@
       <recent name="com.nhlstenden.amazonsimulatie.controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\GraphicsProject\AmazonSimulatie\src" />
       <recent name="C:\Projects\AmazonSimulatie\src\main\resources\static\js\lib" />
       <recent name="C:\Projects\AmazonSimulatie\src\main\resources\static\assets\models\textures" />
       <recent name="C:\Projects\AmazonSimulatie\src\main\resources\static\assets" />
@@ -74,7 +72,30 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.App">
+    <configuration name="All in AmazonSimulatie" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AmazonSimulatie" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DefaultWebSocketViewTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AmazonSimulatie" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhlstenden.amazonsimulatie.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhlstenden.amazonsimulatie.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.nhlstenden.amazonsimulatie.tests.DefaultWebSocketViewTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="AmazonSimulatie" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhlstenden.amazonsimulatie.base.App" />
@@ -82,6 +103,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in AmazonSimulatie" />
+        <item itemvalue="JUnit.DefaultWebSocketViewTests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -116,6 +143,10 @@
       <workItem from="1572635927698" duration="526000" />
       <workItem from="1572644198185" duration="2484000" />
       <workItem from="1572693450026" duration="5850000" />
+      <workItem from="1572773553639" duration="105000" />
+      <workItem from="1572777725188" duration="543000" />
+      <workItem from="1572779015550" duration="969000" />
+      <workItem from="1572788566473" duration="201000" />
     </task>
     <task id="LOCAL-00001" summary="Updated island model so it looks like design.">
       <created>1571661154910</created>
@@ -145,7 +176,35 @@
       <option name="project" value="LOCAL" />
       <updated>1572269048175</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Attempt to fix frontend bugs">
+      <created>1572724913993</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1572724913993</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Robots now have crates">
+      <created>1572727722393</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1572727722393</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added unit tests">
+      <created>1572779573251</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1572779573251</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added not working Dijkstra test">
+      <created>1572779798222</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1572779798222</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +228,10 @@
     <MESSAGE value="Added movement from backend to frontend ships/robots and crates" />
     <MESSAGE value="When client disconnects from backend, all objects get removed from view" />
     <MESSAGE value="Added temporary code to test animations from backend to javascript code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added temporary code to test animations from backend to javascript code" />
+    <MESSAGE value="Attempt to fix frontend bugs" />
+    <MESSAGE value="Robots now have crates" />
+    <MESSAGE value="Added unit tests" />
+    <MESSAGE value="Added not working Dijkstra test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added not working Dijkstra test" />
   </component>
 </project>

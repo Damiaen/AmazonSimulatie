@@ -1,16 +1,13 @@
 import {OBJLoader2} from 'https://threejsfundamentals.org/threejs/resources/threejs/r108/examples/jsm/loaders/OBJLoader2.js';
 import {MTLLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r108/examples/jsm/loaders/MTLLoader.js';
 import {MtlObjBridge} from 'https://threejsfundamentals.org/threejs/resources/threejs/r108/examples/jsm/loaders/obj2/bridge/MtlObjBridge.js';
-import {socketService} from './socketService.js';
 
 class generationService {
 
     constructor() {
         this.scene = new THREE.Scene();
-        this.socket = new socketService();
         this.worldObjects = {};
         this.loadedObjects = [];
-        this.loadedCrates = [];
     }
 
     async setupWorld() {
