@@ -188,7 +188,7 @@ class generationService {
                 }
                 if (this.loadedObjects[command.parameters.uuid]) {
                     if (command.parameters.type === "robot") {
-                        if (command.parameters.status === "WORKING") {
+                        if (command.parameters.status === "WORKINGWITHCRATE") {
                             this.addCrateToRobot(command, true);
                         } else {
                             this.addCrateToRobot(command, false);
